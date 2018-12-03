@@ -18,12 +18,7 @@ include: "*.view.lkml"                       # include all views in this project
 #   }
 # }
 
-explore: list_accounts {
-  label: "FH 360 - Accounts"
-  join: list_campaigns {
-    relationship: one_to_many
-    type: left_outer
 
-    sql_on: ${list_accounts.account_id} = ${list_campaigns.account_id} ;;
-  }
+explore: arch_program {
+  label: "Program Architecture"
 }
