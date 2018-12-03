@@ -21,4 +21,14 @@ include: "*.view.lkml"                       # include all views in this project
 
 explore: arch_program {
   label: "Program Architecture"
+
+  join: mx_master {
+    relationship: one_to_many
+    sql_on: ${arch_program.adgroup_id} = ${mx_master.adgroup_id} ;;
+  }
+}
+
+explore: mx_master {
+  label: "MX Master"
+
 }
