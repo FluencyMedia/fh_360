@@ -1,6 +1,11 @@
 view: mx_master {
-  sql_table_name: analytics.mx_master  ;;
-
+  derived_table: {
+    sql:
+      SELECT
+        *
+      FROM analytics.mx_master
+    ;;
+  }
 
   ##########  METADATA  ##########
 
@@ -44,9 +49,17 @@ view: mx_master {
     view_label: "Timeframes"
     label: "Start Date"
 
-    type: min
+    type: date
 
-    sql: ${date_date} ;;  }
+    sql: MIN(${date_date}) ;;  }
+
+  measure: date_end {
+    view_label: "Timeframes"
+    label: "End Date"
+
+    type: date
+
+    sql: MAX(${date_date}) ;;  }
 
   ##### Channel Dimensions
 
@@ -66,6 +79,8 @@ view: mx_master {
     type: string
 
     sql: ${TABLE}.dimensions ->> 'display_mode' ;;  }
+
+  ##### Outcome Dimensions
 
   dimension: conversion_tracker_id {
     view_label: "Z - Metadata"
@@ -175,5 +190,71 @@ view: mx_master {
     value_format_name: percent_2
 
     sql: 1.0*(${outcomes_sum}) / nullif(${clicks_sum},0) ;;  }
+
+  dimension: outcome_intent {
+    view_label: "Outcomes"
+    label: "Outcome Intent"
+
+    type: string
+
+    sql: ${TABLE}.dimensions ->> 'outcome_intent' ;; }
+
+  dimension: outcome_mechanism {
+    view_label: "Outcomes"
+    label: "Outcome Mechanism"
+
+    type: string
+    sql: ${TABLE}.dimensions ->> 'outcome_mechanism' ;; }
+
+  dimension: outcome_quality {
+    view_label: "Outcomes"
+    label: "Outcome Quality"
+
+    type: string
+    sql: ${TABLE}.dimensions ->> 'outcome_quality' ;; }
+
+  dimension: outcome_score {
+    view_label: "Outcomes"
+    label: "Outcome Score"
+
+    type: number
+    sql: ${TABLE}.dimensions ->> 'outcome_score' ;; }
+
+  dimension: outcome_type {
+    view_label: "Outcomes"
+    label: "Outcome Type"
+
+    type: string
+    sql: ${TABLE}.dimensions ->> 'outcome_type' ;; }
+
+  dimension: outcome_type_name {
+    view_label: "Outcomes"
+    label: "Outcome Type Name"
+
+    hidden: no
+
+    type: string
+    sql: ${TABLE}.dimensions ->> 'outcome_type_name' ;; }
+
+  dimension: lead_qual {
+    view_label: "Outcomes"
+    label: "Lead Qualification"
+
+    case: {
+      when: {
+        sql: ${outcome_quality} = "Referrals" ;;
+        label: "Leads" }
+      when: {
+        sql: ${outcome_quality} = "Leads" ;;
+        label: "Leads" }
+      else: "Outcomes" } }
+
+  measure: avg_conv_score {
+    view_label: "Outcomes"
+    label: "Avg. Outcome Score"
+
+    type: average
+    sql: ${outcome_score} ;;  }
+
 
 }
