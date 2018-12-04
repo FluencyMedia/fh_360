@@ -73,7 +73,7 @@ view: arch_program {
   ##########  DIMENSIONS  ##########
 
   dimension: client {
-    view_label: "Client/Account Dimensions"
+    view_label: "Client/Account"
     label: "Client Account"
     description: "Primary MP360 Client Account"
 
@@ -82,7 +82,7 @@ view: arch_program {
   }
 
   dimension: organization {
-    view_label: "Client/Account Dimensions"
+    view_label: "Client/Account"
     label: "Client Organization"
     description: "Internal Organization Within MP360 Client Account"
 
@@ -91,7 +91,7 @@ view: arch_program {
   }
 
   dimension: account {
-    view_label: "Client/Account Dimensions"
+    view_label: "Client/Account"
     label: "Channel Account"
     description: "ID For Respective 'Channel' Account (Adwords, Display, etc.)"
 
@@ -100,7 +100,7 @@ view: arch_program {
   }
 
   dimension: medium {
-    view_label: "Client/Account Dimensions"
+    view_label: "Channel"
     label: "Medium"
     description: "Digital Channel Used"
 
@@ -109,7 +109,7 @@ view: arch_program {
 }
 
   dimension: campaign {
-    view_label: "Program Dimensions"
+    view_label: "Channel"
     group_label: "Campaign Architecture"
     label: "Campaign"
     description: "Campaign Within Digital Channel"
@@ -119,7 +119,7 @@ view: arch_program {
   }
 
   dimension: adgroup {
-    view_label: "Program Dimensions"
+    view_label: "Channel"
     group_label: "Campaign Architecture"
     label: "Ad Group"
     description: "Adgroup Within Digital Channel"
@@ -128,8 +128,26 @@ view: arch_program {
     sql: ${TABLE}.adgroup ;;
   }
 
+  dimension: service_line {
+    view_label: "Services"
+    label: "Service Line"
+    description: "Service Line"
+
+    type: string
+    sql: ${TABLE}.service_line ;;
+  }
+
+  dimension: program {
+    view_label: "Services"
+    label: "Program"
+    description: "Service Line Program"
+
+    type: string
+    sql: ${TABLE}.program ;;
+  }
+
   dimension: service_line_code {
-    view_label: "Program Dimensions"
+    view_label: "Services"
     group_label: "Service Architecture"
     label: "Service Line Code"
     description: "Service Line Code"

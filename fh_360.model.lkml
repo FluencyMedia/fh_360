@@ -20,15 +20,18 @@ include: "*.view.lkml"                       # include all views in this project
 
 
 explore: arch_program {
-  label: "Program Architecture"
+  group_label: "MedPath360"
+  label: "MedPath360 - Marketing Insights"
 
   join: mx_master {
     relationship: one_to_many
     sql_on: ${arch_program.adgroup_id} = ${mx_master.adgroup_id} ;;
   }
-}
 
-explore: mx_master {
-  label: "MX Master"
+  join: arch_outcomes {
+    relationship: many_to_one
+    sql_on: ${mx_master.conversion_tracker_id} = ${arch_outcomes.conversion_tracker_id} ;;
+  }
+
 
 }
