@@ -1,10 +1,12 @@
 view: mx_master {
-  sql_table_name: analytics.mx_master_material ;;
+  sql_table_name: analytics.mx_master ;;
+
 
   ##########  METADATA  ##########
 
   dimension: adgroup_id {
     view_label: "Z - Metadata"
+    group_label: "Database IDs"
     label: "Ad Group ID [MX_Master]"
     description: "Foreign Key from master metrics table"
 
@@ -13,6 +15,29 @@ view: mx_master {
     type: string
 
     sql: ${TABLE}.adgroup_id ;;  }
+
+  dimension: row_id {
+    view_label: "Z - Metadata"
+    group_label: "Database IDs"
+    label: "Row ID [MX_Master]"
+    description: "Unique row ID from master metrics table"
+
+    hidden: no
+
+    type: string
+
+    sql: ${TABLE}.row_id ;;  }
+
+  dimension: outcome_tracker_id {
+    view_label: "Z - Metadata"
+    group_label: "Database IDs"
+    label: "Outcome Tracker ID [MX_Master]"
+    description: "Unique row ID from master metrics table"
+
+    type: string
+
+    sql: ${TABLE}.outcome_tracker_id ;;  }
+
 
 
   ##########  DIMENSIONS  ##########
@@ -63,7 +88,7 @@ view: mx_master {
 
     type: string
 
-    sql: ${TABLE}.dimensions ->> 'device' ;;  }
+    sql: ${TABLE}.dim_channel ->> 'device' ;;  }
 
   dimension: mode {
     view_label: "3. Channel"
@@ -71,18 +96,17 @@ view: mx_master {
 
     type: string
 
-    sql: ${TABLE}.dimensions ->> 'display_mode' ;;  }
+    sql: ${TABLE}.dim_channel ->> 'display_mode' ;;  }
 
-  ##### Outcome Dimensions
-
-  dimension: conversion_tracker_id {
-    view_label: "Z - Metadata"
-    group_label: "Database IDs"
-    label: "Conversion Tracker ID"
+  dimension: final_url {
+    view_label: "3. Channel"
+    label: "Final URL"
 
     type: string
 
-    sql: ${TABLE}.dimensions ->> 'conversion_tracker_id' ;;  }
+    sql: ${TABLE}.dim_channel ->> 'final_url' ;;  }
+
+  ##### Outcome Dimensions
 
 
   ##########  MEASURES  ##########
@@ -175,51 +199,6 @@ view: mx_master {
 
     sql: 1.0*(${outcomes_sum}) / nullif(${clicks_sum},0) ;;  }
 
-  dimension: outcome_intent {
-    view_label: "6. Outcomes"
-    label: "Outcome Intent"
-
-    type: string
-
-    sql: ${TABLE}.dimensions ->> 'outcome_intent' ;; }
-
-  dimension: outcome_mechanism {
-    view_label: "6. Outcomes"
-    label: "Outcome Mechanism"
-
-    type: string
-    sql: ${TABLE}.dimensions ->> 'outcome_mechanism' ;; }
-
-  dimension: outcome_quality {
-    view_label: "6. Outcomes"
-    label: "Outcome Quality"
-
-    type: string
-    sql: ${TABLE}.dimensions ->> 'outcome_quality' ;; }
-
-  dimension: outcome_score {
-    view_label: "6. Outcomes"
-    label: "Outcome Score"
-
-    type: number
-    sql: ${TABLE}.dimensions ->> 'outcome_score' ;; }
-
-  dimension: outcome_type {
-    view_label: "6. Outcomes"
-    label: "Outcome Type"
-
-    type: string
-    sql: ${TABLE}.dimensions ->> 'outcome_type' ;; }
-
-  dimension: outcome_type_name {
-    view_label: "6. Outcomes"
-    label: "Outcome Type Name"
-
-    hidden: no
-
-    type: string
-    sql: ${TABLE}.dimensions ->> 'outcome_type_name' ;; }
-
   measure: o_referrals_num {
     view_label: "Z - Metadata"
     group_label: "Isolated Measures"
@@ -231,7 +210,7 @@ view: mx_master {
     value_format_name: decimal_0
 
     filters: {
-      field: outcome_quality
+      field: arch_outcomes.outcome_quality
       value: "Referrals"  }  }
 
   measure: o_leads_num {
@@ -245,7 +224,7 @@ view: mx_master {
     value_format_name: decimal_0
 
     filters: {
-      field: outcome_quality
+      field: arch_outcomes.outcome_quality
       value: "Leads"    }  }
 
   measure: o_outcomes_num {
@@ -259,7 +238,7 @@ view: mx_master {
     value_format_name: decimal_0
 
     filters: {
-      field: outcome_quality
+      field: arch_outcomes.outcome_quality
       value: "Outcomes" }  }
 
   measure: leads_total {
@@ -300,7 +279,7 @@ view: mx_master {
 
     type: average
     value_format_name: decimal_1
-    sql: ${outcome_score} ;;  }
+    sql: ${arch_outcomes.outcome_score} ;;  }
 
 
 }
