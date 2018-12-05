@@ -1,5 +1,5 @@
 view: arch_program {
-  sql_table_name: analytics.arch_program ;;
+  sql_table_name: analytics.arch_program_material ;;
 
 
   ##########  METADATA  ##########
@@ -73,7 +73,7 @@ view: arch_program {
   ##########  DIMENSIONS  ##########
 
   dimension: client {
-    view_label: "Client/Account"
+    view_label: "1. Client/Account"
     label: "Client Account"
     description: "Primary MP360 Client Account"
 
@@ -82,7 +82,7 @@ view: arch_program {
   }
 
   dimension: organization {
-    view_label: "Client/Account"
+    view_label: "1. Client/Account"
     label: "Client Organization"
     description: "Internal Organization Within MP360 Client Account"
 
@@ -91,7 +91,7 @@ view: arch_program {
   }
 
   dimension: account {
-    view_label: "Client/Account"
+    view_label: "1. Client/Account"
     label: "Channel Account"
     description: "ID For Respective 'Channel' Account (Adwords, Display, etc.)"
 
@@ -100,7 +100,7 @@ view: arch_program {
   }
 
   dimension: medium {
-    view_label: "Channel"
+    view_label: "3. Channel"
     label: "Medium"
     description: "Digital Channel Used"
 
@@ -109,7 +109,7 @@ view: arch_program {
 }
 
   dimension: campaign {
-    view_label: "Channel"
+    view_label: "3. Channel"
     group_label: "Campaign Architecture"
     label: "Campaign"
     description: "Campaign Within Digital Channel"
@@ -119,7 +119,7 @@ view: arch_program {
   }
 
   dimension: adgroup {
-    view_label: "Channel"
+    view_label: "3. Channel"
     group_label: "Campaign Architecture"
     label: "Ad Group"
     description: "Adgroup Within Digital Channel"
@@ -129,7 +129,7 @@ view: arch_program {
   }
 
   dimension: service_line {
-    view_label: "Services"
+    view_label: "2. Services"
     label: "Service Line"
     description: "Service Line"
 
@@ -138,7 +138,7 @@ view: arch_program {
   }
 
   dimension: program {
-    view_label: "Services"
+    view_label: "2. Services"
     label: "Program"
     description: "Service Line Program"
 
@@ -147,7 +147,7 @@ view: arch_program {
   }
 
   dimension: service_line_code {
-    view_label: "Services"
+    view_label: "2. Services"
     group_label: "Service Architecture"
     label: "Service Line Code"
     description: "Service Line Code"
