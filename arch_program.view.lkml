@@ -1,27 +1,14 @@
 view: arch_program {
-  sql_table_name: analytics.arch_program_material ;;
+  sql_table_name: analytics.arch_program ;;
 
 
   ##########  METADATA  ##########
 
-  dimension: client_id {
-    view_label: "Z - Metadata"
-    group_label: "Database IDs"
-    label: "Client ID"
-    description: "ID for Primary MP360 Client Account"
-
-    hidden: no
-
-    type: string
-
-    sql: ${TABLE}.client_id ;;
-  }
-
   dimension: organization_id {
     view_label: "Z - Metadata"
     group_label: "Database IDs"
-    label: "Organization ID"
-    description: "ID for Organization Within MP360 Client Account"
+    label: "Organization ID [Arch_Program]"
+    description: "Organization ID [Arch_Program]"
 
     hidden: no
 
@@ -30,23 +17,10 @@ view: arch_program {
     sql: ${TABLE}.organization_id ;;
   }
 
-  dimension: account_id {
-    view_label: "Z - Metadata"
-    group_label: "Database IDs"
-    label: "Channel Account ID"
-    description: "ID For Respective 'Channel' Account (Adwords, Display, etc.)"
-
-    hidden: no
-
-    type: string
-
-    sql: ${TABLE}.account_id ;;
-  }
-
   dimension: campaign_id {
     view_label: "Z - Metadata"
     group_label: "Database IDs"
-    label: "Campaign ID"
+    label: "Campaign ID [Arch_Program]"
     description: "Campaign ID"
 
     hidden: no
@@ -59,7 +33,7 @@ view: arch_program {
   dimension: adgroup_id {
     view_label: "Z - Metadata"
     group_label: "Database IDs"
-    label: "Adgroup ID"
+    label: "Adgroup ID [Arch_Program]"
     description: "Ad Group ID"
 
     hidden: no
@@ -71,33 +45,6 @@ view: arch_program {
 
 
   ##########  DIMENSIONS  ##########
-
-  dimension: client {
-    view_label: "1. Client/Account"
-    label: "Client Account"
-    description: "Primary MP360 Client Account"
-
-    type: string
-    sql: ${TABLE}.client ;;
-  }
-
-  dimension: organization {
-    view_label: "1. Client/Account"
-    label: "Client Organization"
-    description: "Internal Organization Within MP360 Client Account"
-
-    type: string
-    sql: ${TABLE}.organization ;;
-  }
-
-  dimension: account {
-    view_label: "1. Client/Account"
-    label: "Channel Account"
-    description: "ID For Respective 'Channel' Account (Adwords, Display, etc.)"
-
-    type: string
-    sql: ${TABLE}.account ;;
-  }
 
   dimension: medium {
     view_label: "3. Channel"
@@ -156,38 +103,17 @@ view: arch_program {
     sql: ${TABLE}.service_line_code ;;
   }
 
+  dimension: agency {
+    view_label: "1. Client/Account"
+    label: "Agency"
+    description: "Agency Managing Any Given Campaign"
+
+    type: string
+    sql: ${TABLE}.agency ;;
+  }
+
 
   ##########  MEASURES  ##########
-
-  measure: num_clients {
-    view_label: "Z - Metadata"
-    group_label: "Category Counts"
-    label: "# Clients"
-    description: "Number of MP360 Client Accounts"
-    type: count_distinct
-
-    sql: ${client_id} ;;
-  }
-
-  measure: num_orgs {
-    view_label: "Z - Metadata"
-    group_label: "Category Counts"
-    label: "# Organizations"
-    description: "Number of MP360 Client Organizations"
-    type: count_distinct
-
-    sql: ${organization_id} ;;
-  }
-
-  measure: num_accounts {
-    view_label: "Z - Metadata"
-    group_label: "Category Counts"
-    label: "# Accounts"
-    description: "Number of Digital Channel Accounts"
-    type: count_distinct
-
-    sql: ${account_id} ;;
-  }
 
   measure: num_campaigns {
     view_label: "Z - Metadata"

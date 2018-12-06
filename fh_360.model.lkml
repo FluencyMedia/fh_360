@@ -12,8 +12,13 @@ explore: arch_program {
     relationship: one_to_many
     sql_on: ${arch_program.adgroup_id} = ${mx_master.adgroup_id} ;; }
 
-join: arch_outcomes {
-  relationship: many_to_one
-  sql_on: ${mx_master.outcome_tracker_id} = ${arch_outcomes.outcome_tracker_id} ;; }
+  join: arch_outcomes {
+    relationship: many_to_one
+    sql_on: ${mx_master.outcome_tracker_id} = ${arch_outcomes.outcome_tracker_id} ;; }
+
+  join: arch_clients {
+    relationship: many_to_one
+    sql_on: ${arch_program.organization_id} = ${arch_clients.organization_id} ;;
+  }
 
 }
