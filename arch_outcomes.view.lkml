@@ -19,7 +19,7 @@ view: arch_outcomes {
   ##########  DIMENSIONS  ##########
 
   dimension: outcome_intent {
-    view_label: "6. Outcomes"
+    view_label: "7. Outcomes"
     label: "Outcome Intent"
 
     type: string
@@ -27,7 +27,7 @@ view: arch_outcomes {
   }
 
   dimension: outcome_mechanism {
-    view_label: "6. Outcomes"
+    view_label: "7. Outcomes"
     label: "Outcome Mechanism"
 
     type: string
@@ -35,7 +35,7 @@ view: arch_outcomes {
   }
 
   dimension: outcome_quality {
-    view_label: "6. Outcomes"
+    view_label: "7. Outcomes"
     label: "Outcome Quality"
 
     type: string
@@ -43,7 +43,7 @@ view: arch_outcomes {
   }
 
   dimension: outcome_score {
-    view_label: "6. Outcomes"
+    view_label: "7. Outcomes"
     label: "Outcome Score"
 
     type: number
@@ -51,7 +51,7 @@ view: arch_outcomes {
   }
 
   dimension: outcome_type {
-    view_label: "6. Outcomes"
+    view_label: "7. Outcomes"
     label: "Outcome Type"
 
     type: string
@@ -59,7 +59,7 @@ view: arch_outcomes {
   }
 
   dimension: outcome_type_name {
-    view_label: "6. Outcomes"
+    view_label: "7. Outcomes"
     label: "Outcome Type Name"
 
     type: string

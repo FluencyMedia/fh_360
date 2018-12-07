@@ -17,6 +17,19 @@ view: arch_program {
     sql: ${TABLE}.organization_id ;;
   }
 
+  dimension: account_id {
+    view_label: "Z - Metadata"
+    group_label: "Database IDs"
+    label: "Channel Account ID"
+    description: "ID For Respective 'Channel' Account (Adwords, Display, etc.)"
+
+    hidden: no
+
+    type: string
+
+    sql: ${TABLE}.account_id ;;
+  }
+
   dimension: campaign_id {
     view_label: "Z - Metadata"
     group_label: "Database IDs"
@@ -43,6 +56,15 @@ view: arch_program {
     sql: ${TABLE}.adgroup_id ;;
   }
 
+  measure: num_accounts {
+    view_label: "Z - Metadata"
+    group_label: "Category Counts"
+    label: "# Accounts"
+    description: "Number of Digital Channel Accounts"
+    type: count_distinct
+
+    sql: ${account_id} ;;
+  }
 
   ##########  DIMENSIONS  ##########
 
@@ -53,7 +75,17 @@ view: arch_program {
 
     type: string
     sql: ${TABLE}.medium ;;
-}
+  }
+
+  dimension: account {
+    view_label: "1. Client/Account"
+    label: "Channel Account"
+    description: "ID For Respective 'Channel' Account (Adwords, Display, etc.)"
+
+    type: string
+    sql: ${TABLE}.account ;;
+  }
+
 
   dimension: campaign {
     view_label: "3. Channel"

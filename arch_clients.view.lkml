@@ -31,19 +31,6 @@ view: arch_clients {
     sql: ${TABLE}.organization_id ;;
   }
 
-  dimension: account_id {
-    view_label: "Z - Metadata"
-    group_label: "Database IDs"
-    label: "Channel Account ID"
-    description: "ID For Respective 'Channel' Account (Adwords, Display, etc.)"
-
-    hidden: no
-
-    type: string
-
-    sql: ${TABLE}.account_id ;;
-  }
-
 
   ##########  DIMENSIONS  ##########
 
@@ -74,15 +61,6 @@ view: arch_clients {
     sql: ${TABLE}.org_short ;;
   }
 
-  dimension: account {
-    view_label: "1. Client/Account"
-    label: "Channel Account"
-    description: "ID For Respective 'Channel' Account (Adwords, Display, etc.)"
-
-    type: string
-    sql: ${TABLE}.account ;;
-  }
-
   ##########  MEASURES  ##########
   measure: num_clients {
     view_label: "Z - Metadata"
@@ -102,16 +80,6 @@ view: arch_clients {
     type: count_distinct
 
     sql: ${organization_id} ;;
-  }
-
-  measure: num_accounts {
-    view_label: "Z - Metadata"
-    group_label: "Category Counts"
-    label: "# Accounts"
-    description: "Number of Digital Channel Accounts"
-    type: count_distinct
-
-    sql: ${account_id} ;;
   }
 
 
