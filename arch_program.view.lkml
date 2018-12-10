@@ -77,6 +77,8 @@ view: arch_program {
         group_label: "Relative Dimensions"
         label: "Program | Service | Campaign | Ad Group"
 
+        type: string
+
         sql:  {% if campaign._is_filtered %}
                 ${adgroup}
               {% elsif service_line._is_filtered %}
@@ -92,6 +94,8 @@ view: arch_program {
         view_label: "2. Services"
         group_label: "Relative Dimensions"
         label: "DETAIL: Program | Service | Campaign | Ad Group"
+
+        type: string
 
         sql:  {% if service_line._is_filtered %}
                     ${adgroup}

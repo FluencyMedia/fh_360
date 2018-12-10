@@ -119,6 +119,34 @@ view: mx_master {
 
     ##### Dynamic Dimensions  {
 
+      dimension: rel_medium {
+        view_label: "3. Channel"
+        group_label: "Relative Dimensions"
+        label: "Related Medium"
+
+        required_access_grants: [access_dev_fields]
+
+        type: string
+
+        sql:  ${arch_program.medium};;
+
+      }
+
+      dimension: rel_medium_mode {
+        view_label: "3. Channel"
+        group_label: "Relative Dimensions"
+        label: "Medium | Mode"
+
+        type: string
+
+        sql:  {% if ${rel_medium}._is_filtered %}
+                ${mode}
+              {% else %}
+                ${rel_medium}
+              {% endif %};;
+
+      }
+
     ##### Dynamic Dimensions } #####
 
   ##########  DIMENSIONS  }  ##########
