@@ -2,328 +2,343 @@ view: mx_master {
   sql_table_name: analytics.mx_master ;;
 
 
-  ##########  METADATA  ##########
+  ##########  METADATA    {
 
-  dimension: adgroup_id {
-    view_label: "Z - Metadata"
-    group_label: "Database IDs"
-    label: "Ad Group ID [MX_Master]"
-    description: "Foreign Key from master metrics table"
+    dimension: adgroup_id {
+      view_label: "3. Channel"
+      group_label: "Z - Dev Fields"
+      label: "Ad Group ID [MX_Master]"
+      description: "Foreign Key from master metrics table"
 
-    hidden: yes
+      required_access_grants: [access_dev_fields]
 
-    type: string
+      type: string
 
-    sql: ${TABLE}.adgroup_id ;;  }
+      sql: ${TABLE}.adgroup_id ;;  }
 
-  dimension: row_id {
-    view_label: "Z - Metadata"
-    group_label: "Database IDs"
-    label: "Row ID [MX_Master]"
-    description: "Unique row ID from master metrics table"
+    dimension: row_id {
+      view_label: "3. Channel"
+      group_label: "Z - Dev Fields"
+      label: "Row ID [MX_Master]"
+      description: "Unique row ID from master metrics table"
 
-    hidden: no
+      required_access_grants: [access_dev_fields]
 
-    type: string
+      type: string
 
-    sql: ${TABLE}.row_id ;;  }
+      sql: ${TABLE}.row_id ;;  }
 
-  dimension: outcome_tracker_id {
-    view_label: "Z - Metadata"
-    group_label: "Database IDs"
-    label: "Outcome Tracker ID [MX_Master]"
-    description: "Unique row ID from master metrics table"
+    dimension: outcome_tracker_id {
+      view_label: "7. Outcomes"
+      group_label: "Z - Dev Fields"
+      label: "Outcome Tracker ID [MX_Master]"
+      description: "Outcome Tracker ID from master metrics table"
 
-    type: string
+      required_access_grants: [access_dev_fields]
 
-    sql: ${TABLE}.outcome_tracker_id ;;  }
+      type: string
 
+      sql: ${TABLE}.outcome_tracker_id ;;  }
 
+  ##########  METADATA  }  ##########
 
-  ##########  DIMENSIONS  ##########
 
-  ##### Time Dimensions
 
-  dimension_group: date {
-    view_label: "4. Timeframes"
-    label: "Timeframes"
-    description: "Optional complex dimension for managing timeframes"
+  ##########  DIMENSIONS  {
 
-    type: time
+    ##### Time Dimensions {
 
-    timeframes: [
-      raw,
-      date,
-      week,
-      month,
-      quarter,
-      year
-    ]
+      dimension_group: date {
+        view_label: "4. Timeframes"
+        label: "Timeframes"
+        description: "Optional complex dimension for managing timeframes"
 
-    convert_tz: yes
-    datatype: date
-    sql: ${TABLE}.date ;;  }
+        type: time
 
-  measure: date_start {
-    view_label: "4. Timeframes"
-    label: "Start Date"
+        timeframes: [
+          raw,
+          date,
+          week,
+          month,
+          quarter,
+          year
+        ]
 
-    type: date
+        convert_tz: yes
+        datatype: date
+        sql: ${TABLE}.date ;;  }
 
-    sql: MIN(${date_date}) ;;  }
+      measure: date_start {
+        view_label: "4. Timeframes"
+        label: "Start Date"
 
-  measure: date_end {
-    view_label: "4. Timeframes"
-    label: "End Date"
+        type: date
 
-    type: date
-    value_format: ""
+        sql: MIN(${date_date}) ;;  }
 
-    sql: MAX(${date_date}) ;;  }
+      measure: date_end {
+        view_label: "4. Timeframes"
+        label: "End Date"
 
-  ##### Channel Dimensions
+        type: date
+        value_format: ""
 
-  dimension: device {
-    view_label: "3. Channel"
-    label: "Device"
+        sql: MAX(${date_date}) ;;  }
 
-    type: string
+    ##### Time Dimension } #####
 
-    sql: ${TABLE}.dim_channel ->> 'device' ;;  }
+    ##### Channel Dimensions {
 
-  dimension: mode {
-    view_label: "3. Channel"
-    label: "Display Mode"
+      dimension: device {
+        view_label: "3. Channel"
+        label: "Device"
 
-    type: string
+        type: string
 
-    html: <font size="2">{{rendered_value}}</font> ;;
+        sql: ${TABLE}.dim_channel ->> 'device' ;;  }
 
-    sql: ${TABLE}.dim_channel ->> 'display_mode' ;;  }
+      dimension: mode {
+        view_label: "3. Channel"
+        label: "Display Mode"
 
-  dimension: final_url {
-    view_label: "3. Channel"
-    label: "Final URL"
+        type: string
 
-    type: string
+        html: <font size="2">{{rendered_value}}</font> ;;
 
-    sql: ${TABLE}.dim_channel ->> 'final_url' ;;  }
+        sql: ${TABLE}.dim_channel ->> 'mode' ;;  }
 
-  ##### Outcome Dimensions
+      dimension: final_url {
+        view_label: "3. Channel"
+        label: "Final URL"
 
+        type: string
 
-  ##########  MEASURES  ##########
+        sql: ${TABLE}.dim_channel ->> 'final_url' ;;  }
 
-  ##### Base Measures
+    ##### Channel Dimensions } #####
 
-  measure: impr_sum {
-    view_label: "5. Performance"
-    label: "# Impressions"
+    ##### Dynamic Dimensions  {
 
-    type: sum
-    value_format_name: decimal_0
+    ##### Dynamic Dimensions } #####
 
-    sql: CAST(${TABLE}.measures ->> 'impressions' AS integer);;  }
+  ##########  DIMENSIONS  }  ##########
 
-  measure: impr_pct {
-    view_label: "5. Performance"
-    group_label: "Interim Measures"
-    label: "% Impressions"
 
-    hidden: no
 
-    type: percent_of_total
-    direction: "column"
-    value_format_name: decimal_1
+  ##########  MEASURES   {
 
-    sql: ${impr_sum};;  }
+    ##### Base Measures {
 
-  measure: clicks_sum {
-    view_label: "5. Performance"
-    label: "# Clicks"
+      measure: impr_sum {
+        view_label: "5. Performance"
+        label: "# Impressions"
 
-    type: sum
-    value_format_name: decimal_0
+        type: sum
+        value_format_name: decimal_0
 
-    sql: CAST(${TABLE}.measures ->> 'clicks' AS integer);;  }
+        sql: CAST(${TABLE}.measures ->> 'impressions' AS integer);;  }
 
-  measure: cost_sum {
-    view_label: "6. Investment"
-    label: "$ Cost"
+      measure: impr_pct {
+        view_label: "5. Performance"
+        group_label: "Interim Measures"
+        label: "% Impressions"
 
-    type: sum
-    value_format_name: usd_0
+        hidden: no
 
-    html: <font size="2">{{rendered_value}}</font> ;;
+        type: percent_of_total
+        direction: "column"
+        value_format_name: decimal_1
 
-    sql: CAST(${TABLE}.measures ->> 'cost' AS double precision);;  }
+        sql: ${impr_sum};;  }
 
-  measure: outcomes_sum {
-    view_label: "5. Performance"
-    label: "# Outcomes"
+      measure: clicks_sum {
+        view_label: "5. Performance"
+        label: "# Clicks"
 
-    type: sum
-    value_format_name: decimal_0
+        type: sum
+        value_format_name: decimal_0
 
-    sql: CAST(${TABLE}.measures ->> 'outcomes' AS integer);;  }
+        sql: CAST(${TABLE}.measures ->> 'clicks' AS integer);;  }
 
-  measure: outcomes_bulk_sum {
-    view_label: "7. Outcomes"
-    label: "# Outcomes (Bulk)"
+      measure: cost_sum {
+        view_label: "6. Investment"
+        label: "$ Cost"
 
-    type: sum
-    value_format_name: decimal_0
+        type: sum
+        value_format_name: usd_0
 
-    sql: CAST(${TABLE}.measures ->> 'outcomes_bulk' AS integer);;  }
+        html: <font size="2">{{rendered_value}}</font> ;;
 
-  ##### Calculated Measures
+        sql: CAST(${TABLE}.measures ->> 'cost' AS double precision);;  }
 
-  measure: ctr {
-    view_label: "5. Performance"
-    label: "% CTR"
+      measure: outcomes_sum {
+        view_label: "5. Performance"
+        label: "# Outcomes"
 
-    type: number
-    value_format_name: percent_1
+        type: sum
+        value_format_name: decimal_0
 
-    sql: 1.0*(${clicks_sum}) / nullif(${impr_sum},0) ;;  }
+        sql: CAST(${TABLE}.measures ->> 'outcomes' AS integer);;  }
 
-  measure: ctr_bar {
-    view_label: "5. Performance"
-    label: "% CTR [BAR]"
+      measure: outcomes_bulk_sum {
+        view_label: "7. Outcomes"
+        label: "# Outcomes (Bulk)"
 
-    type: number
-    value_format_name: percent_1
+        type: sum
+        value_format_name: decimal_0
 
-    html:
-    <div style="float: left
-    ; width:50%
-    ; text-align:right
-    ; margin-right: 4px"> <p>{{rendered_value}}</p>
-    </div>
-    <div style="float: left
-    ; width:{{ value | times:50}}%
-    ; background-color: rgba(0,180,0,{{ value | times:100 }})
-    ; text-align:left
-    ; color: #FFFFFF
-    ; border-radius: 2px"> <p style="margin-bottom: 0; margin-left: 4px;"> &nbsp; </p>
-    </div>
-    ;;
+        sql: CAST(${TABLE}.measures ->> 'outcomes_bulk' AS integer);;  }
 
-    sql: 1.0*(${clicks_sum}) / nullif(${impr_sum},0) ;;  }
+    ##### }
+    ##### End Base Measures
 
+    ##### Calculated Measures {
 
+      measure: ctr {
+        view_label: "5. Performance"
+        label: "% CTR"
 
-  measure: cpc {
-    view_label: "6. Investment"
-    label: "$ CPC"
+        type: number
+        value_format_name: percent_1
 
-    type: number
-    value_format_name: usd
+        sql: 1.0*(${clicks_sum}) / nullif(${impr_sum},0) ;;  }
 
-    sql: 1.0*(${cost_sum}) / nullif(${clicks_sum},0) ;;  }
+      measure: ctr_bar {
+        view_label: "5. Performance"
+        label: "% CTR [BAR]"
 
-  measure: cpo {
-    view_label: "6. Investment"
-    label: "$ CPO"
-    description: "Cost / Outcome"
+        type: number
+        value_format_name: percent_1
 
-    type: number
-    value_format_name: usd
+        html:
+        <div style="float: left
+        ; width:50%
+        ; text-align:right
+        ; margin-right: 4px"> <p>{{rendered_value}}</p>
+        </div>
+        <div style="float: left
+        ; width:{{ value | times:50}}%
+        ; background-color: rgba(0,180,0,{{ value | times:100 }})
+        ; text-align:left
+        ; color: #FFFFFF
+        ; border-radius: 2px"> <p style="margin-bottom: 0; margin-left: 4px;"> &nbsp; </p>
+        </div>
+        ;;
 
-    sql: 1.0*(${cost_sum}) / nullif(${outcomes_sum},0) ;;  }
+        sql: 1.0*(${clicks_sum}) / nullif(${impr_sum},0) ;;  }
 
+      measure: cpc {
+        view_label: "6. Investment"
+        label: "$ CPC"
 
-  measure: otr {
-    view_label: "5. Performance"
-    label: "% OTR"
-    description: "Outcomes / Clicks"
+        type: number
+        value_format_name: usd
 
-    type: number
-    value_format_name: percent_2
+        sql: 1.0*(${cost_sum}) / nullif(${clicks_sum},0) ;;  }
 
-    sql: 1.0*(${outcomes_sum}) / nullif(${clicks_sum},0) ;;  }
+      measure: cpo {
+        view_label: "6. Investment"
+        label: "$ CPO"
+        description: "Cost / Outcome"
 
-  measure: o_referrals_num {
-    view_label: "Z - Metadata"
-    group_label: "Isolated Measures"
-    label: "# Outcomes (Referrals)"
-    description: "ISOLATED: Outcome Quality = 'Referrals'"
+        type: number
+        value_format_name: usd
 
-    type: sum
-    sql: (${TABLE}.measures ->> 'outcomes')::integer ;;
-    value_format_name: decimal_0
+        sql: 1.0*(${cost_sum}) / nullif(${outcomes_sum},0) ;;  }
 
-    filters: {
-      field: arch_outcomes.outcome_quality
-      value: "Referrals"  }  }
+      measure: otr {
+        view_label: "5. Performance"
+        label: "% OTR"
+        description: "Outcomes / Clicks"
 
-  measure: o_leads_num {
-    view_label: "Z - Metadata"
-    group_label: "Isolated Measures"
-    label: "# Outcomes (Leads)"
-    description: "ISOLATED: Outcome Quality = 'Leads'"
+        type: number
+        value_format_name: percent_2
 
-    type: sum
-    sql: (${TABLE}.measures ->> 'outcomes')::integer ;;
-    value_format_name: decimal_0
+        sql: 1.0*(${outcomes_sum}) / nullif(${clicks_sum},0) ;;  }
 
-    filters: {
-      field: arch_outcomes.outcome_quality
-      value: "Leads"    }  }
+      measure: o_referrals_num {
+        view_label: "Z - Metadata"
+        group_label: "Isolated Measures"
+        label: "# Outcomes (Referrals)"
+        description: "ISOLATED: Outcome Quality = 'Referrals'"
 
-  measure: o_outcomes_num {
-    view_label: "Z - Metadata"
-    group_label: "Isolated Measures"
-    label: "# Outcomes (Outcomes)"
-    description: "ISOLATED: Outcome Quality = 'Outcomes'"
+        type: sum
+        sql: (${TABLE}.measures ->> 'outcomes')::integer ;;
+        value_format_name: decimal_0
 
-    type: sum
-    sql: (${TABLE}.measures ->> 'outcomes')::integer ;;
-    value_format_name: decimal_0
+        filters: {
+          field: arch_outcomes.outcome_quality
+          value: "Referrals"  }  }
 
-    filters: {
-      field: arch_outcomes.outcome_quality
-      value: "Outcomes" }  }
+      measure: o_leads_num {
+        view_label: "Z - Metadata"
+        group_label: "Isolated Measures"
+        label: "# Outcomes (Leads)"
+        description: "ISOLATED: Outcome Quality = 'Leads'"
 
-  measure: leads_total {
-    view_label: "7. Outcomes"
-    label: "# Leads"
-    description: "AGGREGATED: # Outcomes (Referrals) + # Outcomes (Leads)"
+        type: sum
+        sql: (${TABLE}.measures ->> 'outcomes')::integer ;;
+        value_format_name: decimal_0
 
-    type: number
-    sql: ${o_referrals_num} + ${o_leads_num} ;;
-    value_format_name: decimal_0
-  }
+        filters: {
+          field: arch_outcomes.outcome_quality
+          value: "Leads"    }  }
 
-  measure: cpl {
-    view_label: "7. Outcomes"
-    label: "$ CPL"
-    description: "$ Cost / # Leads"
+      measure: o_outcomes_num {
+        view_label: "Z - Metadata"
+        group_label: "Isolated Measures"
+        label: "# Outcomes (Outcomes)"
+        description: "ISOLATED: Outcome Quality = 'Outcomes'"
 
-    type: number
-    value_format_name: usd
+        type: sum
+        sql: (${TABLE}.measures ->> 'outcomes')::integer ;;
+        value_format_name: decimal_0
 
-    sql: 1.0*(${cost_sum}) / nullif(${leads_total},0) ;;  }
+        filters: {
+          field: arch_outcomes.outcome_quality
+          value: "Outcomes" }  }
 
-  measure: ltr {
-    view_label: "7. Outcomes"
-    label: "% LTR"
-    description: "# Leads / # Clicks"
+      measure: leads_total {
+        view_label: "7. Outcomes"
+        label: "# Leads"
+        description: "AGGREGATED: # Outcomes (Referrals) + # Outcomes (Leads)"
 
-    type: number
-    value_format_name: percent_2
+        type: number
+        sql: ${o_referrals_num} + ${o_leads_num} ;;
+        value_format_name: decimal_0
+      }
 
-    sql: 1.0*(${leads_total}) / nullif(${clicks_sum},0) ;;  }
+      measure: cpl {
+        view_label: "7. Outcomes"
+        label: "$ CPL"
+        description: "$ Cost / # Leads"
 
+        type: number
+        value_format_name: usd
 
+        sql: 1.0*(${cost_sum}) / nullif(${leads_total},0) ;;  }
 
-  measure: avg_conv_score {
-    view_label: "7. Outcomes"
-    label: "Avg. Outcome Score"
+      measure: ltr {
+        view_label: "7. Outcomes"
+        label: "% LTR"
+        description: "# Leads / # Clicks"
 
-    type: average
-    value_format_name: decimal_1
-    sql: ${arch_outcomes.outcome_score} ;;  }
+        type: number
+        value_format_name: percent_2
 
+        sql: 1.0*(${leads_total}) / nullif(${clicks_sum},0) ;;  }
+
+      measure: avg_conv_score {
+        view_label: "7. Outcomes"
+        label: "Avg. Outcome Score"
+
+        type: average
+        value_format_name: decimal_1
+        sql: ${arch_outcomes.outcome_score} ;;  }
+
+    ##### }
+    ##### Calculated Measures
+
+  ##########  MEASURES  }  ##########
 
 }
