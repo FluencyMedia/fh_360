@@ -1,7 +1,7 @@
 connection: "fh_analytics"
 
 include: "*.view.lkml"                       # include all views in this project
-# include: "my_dashboard.dashboard.lookml"   # include a LookML dashboard called my_dashboard
+include: "*.dashboard.lookml"   # include a LookML dashboard called my_dashboard
 
 access_grant: access_dev_fields {
   user_attribute: access_dev_fields

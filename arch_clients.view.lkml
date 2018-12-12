@@ -43,6 +43,21 @@ view: arch_clients {
     sql: ${TABLE}.client ;;
   }
 
+  dimension: client_html {
+    view_label: "1. Client/Account"
+    label: "Client [HTML]"
+
+    type: string
+
+    sql: ${TABLE}.client ;;
+
+    html:
+        <div>
+        <p>{{rendered_value}}</p>
+        </div>
+         ;;
+  }
+
   dimension: organization {
     view_label: "1. Client/Account"
     label: "Client Organization"

@@ -124,7 +124,7 @@ view: mx_master {
         group_label: "Relative Dimensions"
         label: "Related Medium"
 
-        required_access_grants: [access_dev_fields]
+        hidden: yes
 
         type: string
 

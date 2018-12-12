@@ -72,6 +72,18 @@ view: arch_program {
 
   ##########  DIMENSIONS  { ##########
 
+      dimension: rel_client {
+        view_label: "1. Client/Account"
+        group_label: "Relative Dimensions"
+        label: "Related Client"
+
+        hidden: no
+
+        type: string
+
+        sql: ${arch_clients.client} ;;
+      }
+
       dimension: rel_program_main {
         view_label: "2. Services"
         group_label: "Relative Dimensions"
