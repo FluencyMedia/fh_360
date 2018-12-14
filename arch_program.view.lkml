@@ -84,10 +84,20 @@ view: arch_program {
         sql: ${arch_clients.client} ;;
       }
 
+
+
       dimension: rel_program_main {
         view_label: "2. Services"
         group_label: "Relative Dimensions"
-        label: "Program | Service | Campaign | Ad Group"
+        label: "{% if campaign._is_filtered %}
+                [AdGroup]
+              {% elsif service_line._is_filtered %}
+                [Campaign]
+              {% elsif program._is_filtered %}
+                [Service]
+              {% else %}
+                [Program]
+              {% endif %}"
 
         type: string
 
@@ -105,7 +115,15 @@ view: arch_program {
       dimension: rel_program_detail {
         view_label: "2. Services"
         group_label: "Relative Dimensions"
-        label: "DETAIL: Program | Service | Campaign | Ad Group"
+        label: "{% if service_line._is_filtered %}
+                    [[AdGroup]]
+                  {% elsif program._is_filtered %}
+                    [[Campaign]]
+                  {% elsif campaign._is_filtered %}
+                    [[Campaign*]]
+                  {% else %}
+                    [[Agency]]
+                  {% endif %}"
 
         type: string
 

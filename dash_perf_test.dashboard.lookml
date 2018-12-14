@@ -3,6 +3,7 @@
   layout: grid
   rows:
   - elements: [display_flights]
+    height: 200
   elements:
   - title: Display Flights
     name: display_flights

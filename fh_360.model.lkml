@@ -1,5 +1,10 @@
 connection: "fh_analytics"
 
+datagroup: mp360_datagroup {
+  sql_trigger: SELECT COUNT(mx.row_id) FROM analytics.mx_master mx ;;
+  max_cache_age: "24 hours"
+}
+
 include: "*.view.lkml"                       # include all views in this project
 include: "*.dashboard.lookml"   # include a LookML dashboard called my_dashboard
 

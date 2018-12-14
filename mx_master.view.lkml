@@ -58,6 +58,8 @@ view: mx_master {
         timeframes: [
           raw,
           date,
+          day_of_week_index,
+          day_of_week,
           week,
           month,
           quarter,
@@ -99,7 +101,7 @@ view: mx_master {
 
       dimension: mode {
         view_label: "3. Channel"
-        label: "Display Mode"
+        label: "Mode"
 
         type: string
 
@@ -119,32 +121,39 @@ view: mx_master {
 
     ##### Dynamic Dimensions  {
 
-      dimension: rel_medium {
-        view_label: "3. Channel"
-        group_label: "Relative Dimensions"
-        label: "Related Medium"
-
-        hidden: yes
-
-        type: string
-
-        sql:  ${arch_program.medium};;
-
-      }
-
       dimension: rel_medium_mode {
         view_label: "3. Channel"
         group_label: "Relative Dimensions"
-        label: "Medium | Mode"
+        label: "{% if ${arch_program.medium}._is_filtered %}
+                  [Mode]
+                {% else %}
+                  [Medium]
+                {% endif %}"
 
         type: string
 
-        sql:  {% if ${rel_medium}._is_filtered %}
+        sql:  {% if ${arch_program.medium}._is_filtered %}
                 ${mode}
               {% else %}
-                ${rel_medium}
+                ${arch_program.medium}
               {% endif %};;
 
+      }
+
+      parameter: font_size {
+        type: number
+        allowed_value: {
+          label: "Small"
+          value: "1"
+        }
+        allowed_value: {
+          label: "Medium"
+          value: "2"
+        }
+        allowed_value: {
+          label: "Large"
+          value: "2"
+        }
       }
 
     ##### Dynamic Dimensions } #####
@@ -195,7 +204,13 @@ view: mx_master {
         type: sum
         value_format_name: usd_0
 
-        html: <font size="2">{{rendered_value}}</font> ;;
+        html: {% if ${rel_medium}._is_filtered %}
+                ${mode}
+              {% else %}
+                ${rel_medium}
+              {% endif %}
+
+        <font size={{_field.font_size}}>{{rendered_value}}</font> ;;
 
         sql: CAST(${TABLE}.measures ->> 'cost' AS double precision);;  }
 
@@ -227,7 +242,7 @@ view: mx_master {
         label: "% CTR"
 
         type: number
-        value_format_name: percent_1
+        value_format_name: percent_2
 
         sql: 1.0*(${clicks_sum}) / nullif(${impr_sum},0) ;;  }
 
