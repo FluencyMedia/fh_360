@@ -1,5 +1,16 @@
 view: mx_master {
-  sql_table_name: analytics.mx_master ;;
+  derived_table: {
+    sql:
+      SELECT
+        row_id,
+        date,
+        last_updated,
+        adgroup_id,
+        outcome_tracker_id,
+        dim_channel,
+        measures
+      FROM analytics.mx_master;;
+  }
 
 
   ##########  METADATA    {
@@ -174,6 +185,16 @@ view: mx_master {
         value_format_name: decimal_0
 
         sql: CAST(${TABLE}.measures ->> 'impressions' AS integer);;  }
+
+      measure: impr_max {
+
+        view_label: "5. Performance"
+        label: "MAX Impressions"
+
+        type: number
+        value_format_name: decimal_0
+
+        sql: MAX(CAST(${TABLE}.measures ->> 'impressions' AS integer)) OVER (PARTITION BY ${date_date},${arch_program.rel_program_main}) GROUP BY ${arch_program.rel_program_main};;  }
 
       measure: impr_pct {
         view_label: "5. Performance"
