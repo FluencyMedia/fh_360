@@ -96,6 +96,14 @@ view: mx_master {
       sql: ${date_end} - ${date_start} ;;
     }
 
+    measure: count_days {
+
+      type: count_distinct
+      value_format_name: decimal_0
+
+      sql: ${date_date} ;;
+    }
+
 
 
     ##### Time Dimension } #####
@@ -214,14 +222,6 @@ view: mx_master {
 
         type: sum
         value_format_name: usd_0
-
-        html: {% if ${rel_medium}._is_filtered %}
-                ${mode}
-              {% else %}
-                ${rel_medium}
-              {% endif %}
-
-        <font size={{_field.font_size}}>{{rendered_value}}</font> ;;
 
         sql: CAST(${TABLE}.measures ->> 'cost' AS double precision);;  }
 

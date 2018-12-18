@@ -171,8 +171,8 @@ view: arch_program {
       dimension: campaign_group {
         view_label: "3. Channel"
         group_label: "Campaign Architecture"
-        label: "Campaign"
-        description: "Campaign Within Digital Channel"
+        label: "Campaign Group"
+        description: "Campaign Group Within Digital Channel"
 
         type: string
         sql: ${TABLE}.campaign_group ;;
