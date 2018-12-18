@@ -90,9 +90,11 @@ view: arch_program {
         view_label: "2. Services"
         group_label: "Relative Dimensions"
         label: "{% if campaign._is_filtered %}
-                [AdGroup]
-              {% elsif service_line._is_filtered %}
+                [Ad Group]
+              {% elsif campaign_group._is_filtered %}
                 [Campaign]
+              {% elsif service_line._is_filtered %}
+                [Campaign Group]
               {% elsif program._is_filtered %}
                 [Service]
               {% else %}
@@ -103,8 +105,10 @@ view: arch_program {
 
         sql:  {% if campaign._is_filtered %}
                 ${adgroup}
-              {% elsif service_line._is_filtered %}
+              {% elsif campaign_group._is_filtered %}
                 ${campaign}
+              {% elsif service_line._is_filtered %}
+                ${campaign_group}
               {% elsif program._is_filtered %}
                 ${service_line}
               {% else %}
@@ -116,11 +120,9 @@ view: arch_program {
         view_label: "2. Services"
         group_label: "Relative Dimensions"
         label: "{% if service_line._is_filtered %}
-                    [[AdGroup]]
-                  {% elsif program._is_filtered %}
                     [[Campaign]]
-                  {% elsif campaign._is_filtered %}
-                    [[Campaign*]]
+                  {% elsif program._is_filtered %}
+                    [[Campaign Group]]
                   {% else %}
                     [[Agency]]
                   {% endif %}"
@@ -128,11 +130,9 @@ view: arch_program {
         type: string
 
         sql:  {% if service_line._is_filtered %}
-                    ${adgroup}
+                    ${campaign}
                   {% elsif program._is_filtered %}
-                    ${campaign}
-                  {% elsif campaign._is_filtered %}
-                    ${campaign}
+                    ${campaign_group}
                   {% else %}
                     ${agency}
                   {% endif %} ;;
@@ -166,6 +166,16 @@ view: arch_program {
 
         type: string
         sql: ${TABLE}.campaign ;;
+      }
+
+      dimension: campaign_group {
+        view_label: "3. Channel"
+        group_label: "Campaign Architecture"
+        label: "Campaign"
+        description: "Campaign Within Digital Channel"
+
+        type: string
+        sql: ${TABLE}.campaign_group ;;
       }
 
       dimension: adgroup {

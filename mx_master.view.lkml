@@ -70,22 +70,22 @@ view: mx_master {
         datatype: date
         sql: ${TABLE}.date ;;  }
 
-      measure: date_start {
-        view_label: "4. Timeframes"
-        label: "Start Date"
+    measure: date_start {
+      view_label: "4. Timeframes"
+      label: "Start Date"
 
-        type: date
+      type: date
 
-        sql: MIN(${date_date}) ;;  }
+      sql: MIN(${date_date})::DATE ;;  }
 
-      measure: date_end {
-        view_label: "4. Timeframes"
-        label: "End Date"
+    measure: date_end {
+      view_label: "4. Timeframes"
+      label: "End Date"
 
-        type: date
-        value_format: ""
+      type: date
 
-        sql: MAX(${date_date}) ;;  }
+      sql: MAX(${date_date})::DATE ;;  }
+
 
     ##### Time Dimension } #####
 
@@ -180,7 +180,7 @@ view: mx_master {
         group_label: "Interim Measures"
         label: "% Impressions"
 
-        hidden: no
+        hidden: yes
 
         type: percent_of_total
         direction: "column"
@@ -198,7 +198,7 @@ view: mx_master {
         sql: CAST(${TABLE}.measures ->> 'clicks' AS integer);;  }
 
       measure: cost_sum {
-        view_label: "6. Investment"
+        view_label: "5. Performance"
         label: "$ Cost"
 
         type: sum
@@ -224,8 +224,11 @@ view: mx_master {
         sql: CAST(${TABLE}.measures ->> 'outcomes' AS integer);;  }
 
       measure: outcomes_bulk_sum {
-        view_label: "7. Outcomes"
+        view_label: "6. Outcomes"
+        group_label: "Z - Reference"
         label: "# Outcomes (Bulk)"
+
+        hidden: no
 
         type: sum
         value_format_name: decimal_0
@@ -271,7 +274,7 @@ view: mx_master {
         sql: 1.0*(${clicks_sum}) / nullif(${impr_sum},0) ;;  }
 
       measure: cpc {
-        view_label: "6. Investment"
+        view_label: "5. Performance"
         label: "$ CPC"
 
         type: number
@@ -280,7 +283,7 @@ view: mx_master {
         sql: 1.0*(${cost_sum}) / nullif(${clicks_sum},0) ;;  }
 
       measure: cpo {
-        view_label: "6. Investment"
+        view_label: "6. Outcomes"
         label: "$ CPO"
         description: "Cost / Outcome"
 
@@ -290,7 +293,7 @@ view: mx_master {
         sql: 1.0*(${cost_sum}) / nullif(${outcomes_sum},0) ;;  }
 
       measure: otr {
-        view_label: "5. Performance"
+        view_label: "6. Outcomes"
         label: "% OTR"
         description: "Outcomes / Clicks"
 
@@ -342,7 +345,7 @@ view: mx_master {
           value: "Outcomes" }  }
 
       measure: leads_total {
-        view_label: "7. Outcomes"
+        view_label: "6. Outcomes"
         label: "# Leads"
         description: "AGGREGATED: # Outcomes (Referrals) + # Outcomes (Leads)"
 
@@ -352,7 +355,7 @@ view: mx_master {
       }
 
       measure: cpl {
-        view_label: "7. Outcomes"
+        view_label: "6. Outcomes"
         label: "$ CPL"
         description: "$ Cost / # Leads"
 
@@ -362,7 +365,7 @@ view: mx_master {
         sql: 1.0*(${cost_sum}) / nullif(${leads_total},0) ;;  }
 
       measure: ltr {
-        view_label: "7. Outcomes"
+        view_label: "6. Outcomes"
         label: "% LTR"
         description: "# Leads / # Clicks"
 
@@ -372,7 +375,7 @@ view: mx_master {
         sql: 1.0*(${leads_total}) / nullif(${clicks_sum},0) ;;  }
 
       measure: avg_conv_score {
-        view_label: "7. Outcomes"
+        view_label: "6. Outcomes"
         label: "Avg. Outcome Score"
 
         type: average
