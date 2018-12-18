@@ -86,6 +86,17 @@ view: mx_master {
 
       sql: MAX(${date_date})::DATE ;;  }
 
+    measure: date_diff {
+      view_label: "4. Timeframes"
+      label: "Duration - Days"
+
+      type: number
+      value_format_name: decimal_0
+
+      sql: ${date_end} - ${date_start} ;;
+    }
+
+
 
     ##### Time Dimension } #####
 
