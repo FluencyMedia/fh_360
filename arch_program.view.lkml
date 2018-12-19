@@ -178,6 +178,21 @@ view: arch_program {
         sql: ${TABLE}.campaign_group ;;
       }
 
+      dimension: campaign_region {
+        view_label: "3. Channel"
+        group_label: "Campaign Geography"
+        label: "Region"
+
+        type: string
+        sql: ${TABLE}.campaign_region ;;
+      }
+
+      dimension: campaign_location {
+        view_label: "3. Channel"
+        group_label: "Campaign Geography"
+
+      }
+
       dimension: adgroup {
         view_label: "3. Channel"
         group_label: "Campaign Architecture"
