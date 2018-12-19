@@ -97,6 +97,9 @@ view: mx_master {
     }
 
     measure: count_days {
+      view_label: "Z - Metadata"
+      group_label: "Category Counts"
+      label: "# Days"
 
       type: count_distinct
       value_format_name: decimal_0
@@ -160,6 +163,8 @@ view: mx_master {
       }
 
       parameter: font_size {
+        view_label: "Z - Metadata"
+
         type: number
         allowed_value: {
           label: "Small"
