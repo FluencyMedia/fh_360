@@ -30,7 +30,7 @@ view: mx_master {
 
     dimension: outcome_tracker_id {
       view_label: "Z - Metadata"
-      group_label: "Outcome Elements"
+      group_label: "Database IDs"
       label: "Outcome Tracker ID [MX_Master]"
       description: "Outcome Tracker ID from master metrics table"
 
