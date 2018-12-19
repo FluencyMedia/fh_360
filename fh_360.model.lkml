@@ -1,7 +1,17 @@
 connection: "fh_analytics"
 
 datagroup: mp360_datagroup {
-  sql_trigger: SELECT MAX(mx.last_updated) FROM analytics.mx_master mx ;;
+  sql_trigger:  SELECT
+                  MAX(trg.last_updated)
+                FROM (
+                  SELECT mx.last_updated from analytics.mx_master mx
+                  UNION ALL
+                  SELECT ap.last_updated from analytics.arch_program ap
+                  UNION ALL
+                  SELECT ao.last_updated from analytics.arch_outcomes ao
+                  UNION ALL
+                  SELECT ac.last_updated from analytics.arch_clients ac
+                ) trg ;;
   max_cache_age: "24 hours"
 }
 

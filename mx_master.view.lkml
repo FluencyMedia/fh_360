@@ -29,8 +29,8 @@ view: mx_master {
       sql: ${TABLE}.row_id ;;  }
 
     dimension: outcome_tracker_id {
-      view_label: "7. Outcomes"
-      group_label: "Z - Dev Fields"
+      view_label: "Z - Metadata"
+      group_label: "Outcome Elements"
       label: "Outcome Tracker ID [MX_Master]"
       description: "Outcome Tracker ID from master metrics table"
 
