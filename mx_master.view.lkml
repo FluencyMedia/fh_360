@@ -231,7 +231,7 @@ view: mx_master {
         sql: CAST(${TABLE}.measures ->> 'cost' AS double precision);;  }
 
       measure: outcomes_sum {
-        view_label: "5. Performance"
+        view_label: "6. Outcomes"
         label: "# Outcomes"
 
         type: sum
