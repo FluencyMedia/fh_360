@@ -72,6 +72,26 @@ view: arch_program {
 
   ##########  DIMENSIONS  { ##########
 
+      set: drill_program {
+        fields: [
+          service_line,
+          campaign_group,
+          campaign
+        ]
+      }
+
+      set: drill_campaign {
+        fields: [
+          adgroup
+        ]
+      }
+
+      set: drill_medium {
+        fields: [
+          mx_metrics.mode
+        ]
+      }
+
       dimension: rel_client {
         view_label: "1. Client/Account"
         group_label: "Relative Dimensions"
@@ -154,6 +174,8 @@ view: arch_program {
         label: "Channel Account"
         description: "ID For Respective 'Channel' Account (Adwords, Display, etc.)"
 
+        drill_fields: []
+
         type: string
         sql: ${TABLE}.account ;;
       }
@@ -208,6 +230,10 @@ view: arch_program {
         label: "Service Line"
         description: "Service Line"
 
+        drill_fields: [
+          drill_program*
+        ]
+
         type: string
         sql: ${TABLE}.service_line ;;
       }
@@ -216,6 +242,10 @@ view: arch_program {
         view_label: "2. Services"
         label: "Program"
         description: "Service Line Program"
+
+        drill_fields: [
+          drill_program*
+          ]
 
         type: string
         sql: ${TABLE}.program ;;
@@ -246,22 +276,57 @@ view: arch_program {
 
   ##########  MEASURES  { ##########
 
+  measure: num_programs {
+    view_label: "2. Services"
+    group_label: "Z - Category Counts"
+    label: "# Programs"
+    description: "Number of Service Programs"
+    type: count_distinct
+    value_format_name: decimal_0
+
+    sql: ${program} ;;
+    }
+
+  measure: num_services {
+    view_label: "2. Services"
+    group_label: "Z - Category Counts"
+    label: "# Service Lines"
+    description: "Number of Service Lines"
+    type: count_distinct
+    value_format_name: decimal_0
+
+    sql: ${service_line} ;;
+    }
+
+  measure: num_campaign_groups {
+    view_label: "3. Channel"
+    group_label: "Z - Category Counts"
+    label: "# Campaign Groups"
+    description: "Number of Digital Channel Campaign Groups"
+    type: count_distinct
+    value_format_name: decimal_0
+
+    sql: ${campaign_id} ;;
+    }
+
   measure: num_campaigns {
-    view_label: "Z - Metadata"
-    group_label: "Category Counts"
+    view_label: "3. Channel"
+    group_label: "Z - Category Counts"
     label: "# Campaigns"
     description: "Number of Digital Channel Campaigns"
     type: count_distinct
+    value_format_name: decimal_0
 
     sql: ${campaign_id} ;;
   }
 
   measure: num_adgroups {
-    view_label: "Z - Metadata"
-    group_label: "Category Counts"
+    view_label: "3. Channel"
+    group_label: "Z - Category Counts"
     label: "# Ad Groups"
     description: "Number of Digital Channel Ad Groups"
     type: count_distinct
+    value_format_name: decimal_0
 
     sql: ${adgroup_id} ;;
   }

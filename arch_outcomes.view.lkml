@@ -18,9 +18,21 @@ view: arch_outcomes {
 
   ##########  DIMENSIONS  ##########
 
+  set: drill_outcome {
+    fields: [
+      outcome_quality,
+      outcome_intent,
+      outcome_mechanism
+    ]
+  }
+
   dimension: outcome_intent {
     view_label: "6. Outcomes"
     label: "Outcome Intent"
+
+    drill_fields: [
+      drill_outcome*
+    ]
 
     type: string
     sql: ${TABLE}.outcome_intent ;;
@@ -30,6 +42,10 @@ view: arch_outcomes {
     view_label: "6. Outcomes"
     label: "Outcome Mechanism"
 
+    drill_fields: [
+      drill_outcome*
+    ]
+
     type: string
     sql: ${TABLE}.outcome_mechanism ;;
   }
@@ -37,6 +53,10 @@ view: arch_outcomes {
   dimension: outcome_quality {
     view_label: "6. Outcomes"
     label: "Outcome Quality"
+
+    drill_fields: [
+      drill_outcome*
+    ]
 
     type: string
     sql: ${TABLE}.outcome_quality ;;

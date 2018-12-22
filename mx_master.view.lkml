@@ -5,8 +5,8 @@ view: mx_master {
   ##########  METADATA    {
 
     dimension: adgroup_id {
-      view_label: "3. Channel"
-      group_label: "Z - Dev Fields"
+      view_label: "Z - Metadata"
+      group_label: "Database IDs"
       label: "Ad Group ID [MX_Master]"
       description: "Foreign Key from master metrics table"
 
@@ -17,8 +17,8 @@ view: mx_master {
       sql: ${TABLE}.adgroup_id ;;  }
 
     dimension: row_id {
-      view_label: "3. Channel"
-      group_label: "Z - Dev Fields"
+      view_label: "Z - Metadata"
+      group_label: "Database IDs"
       label: "Row ID [MX_Master]"
       description: "Unique row ID from master metrics table"
 
@@ -45,6 +45,29 @@ view: mx_master {
 
 
   ##########  DIMENSIONS  {
+
+    ##### Field Sets {
+      set: drill_outcomes {
+        fields: [
+          arch_programs.program,
+          arch_programs.service,
+          arch_outcomes.outcome_mechanism,
+          arch_outcomes.outcome_type
+        ]
+      }
+
+  set: drill_mx_outcomes {
+    fields: [
+      leads_total,
+      cost_sum,
+      cpl,
+      ltr
+    ]
+  }
+
+
+
+    # } #####
 
     ##### Time Dimensions {
 
@@ -365,6 +388,11 @@ view: mx_master {
         label: "# Leads"
         description: "AGGREGATED: # Outcomes (Referrals) + # Outcomes (Leads)"
 
+        drill_fields: [
+          drill_outcomes*,
+          drill_mx_outcomes*
+        ]
+
         type: number
         sql: ${o_referrals_num} + ${o_leads_num} ;;
         value_format_name: decimal_0
@@ -374,6 +402,10 @@ view: mx_master {
         view_label: "6. Outcomes"
         label: "$ CPL"
         description: "$ Cost / # Leads"
+
+        drill_fields: [
+          drill_outcomes*
+        ]
 
         type: number
         value_format_name: usd

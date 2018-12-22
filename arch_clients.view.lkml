@@ -34,10 +34,21 @@ view: arch_clients {
 
   ##########  DIMENSIONS  ##########
 
+  set: drill_client {
+    fields: [
+      organization,
+      arch_program.program
+    ]
+  }
+
   dimension: client {
     view_label: "1. Client/Account"
     label: "Client Account"
     description: "Primary MP360 Client Account"
+
+    drill_fields: [
+      drill_client*
+    ]
 
     type: string
     sql: ${TABLE}.client ;;
@@ -63,6 +74,11 @@ view: arch_clients {
     label: "Client Organization"
     description: "Internal Organization Within MP360 Client Account"
 
+    drill_fields: [
+      drill_client*,
+      -client
+    ]
+
     type: string
     sql: ${TABLE}.organization ;;
   }
@@ -78,91 +94,26 @@ view: arch_clients {
 
   ##########  MEASURES  ##########
   measure: num_clients {
-    view_label: "Z - Metadata"
-    group_label: "Category Counts"
+    view_label: "1. Client/Account"
+    group_label: "Z - Category Counts"
     label: "# Clients"
     description: "Number of MP360 Client Accounts"
     type: count_distinct
+    value_format_name: decimal_0
 
     sql: ${client_id} ;;
   }
 
   measure: num_orgs {
-    view_label: "Z - Metadata"
-    group_label: "Category Counts"
+    view_label: "1. Client/Account"
+    group_label: "Z - Category Counts"
     label: "# Organizations"
     description: "Number of MP360 Client Organizations"
     type: count_distinct
+    value_format_name: decimal_0
 
     sql: ${organization_id} ;;
   }
 
 
-  # # You can specify the table name if it's different from the view name:
-  # sql_table_name: my_schema_name.tester ;;
-  #
-  # # Define your dimensions and measures here, like this:
-  # dimension: user_id {
-  #   description: "Unique ID for each user that has ordered"
-  #   type: number
-  #   sql: ${TABLE}.user_id ;;
-  # }
-  #
-  # dimension: lifetime_orders {
-  #   description: "The total number of orders for each user"
-  #   type: number
-  #   sql: ${TABLE}.lifetime_orders ;;
-  # }
-  #
-  # dimension_group: most_recent_purchase {
-  #   description: "The date when each user last ordered"
-  #   type: time
-  #   timeframes: [date, week, month, year]
-  #   sql: ${TABLE}.most_recent_purchase_at ;;
-  # }
-  #
-  # measure: total_lifetime_orders {
-  #   description: "Use this for counting lifetime orders across many users"
-  #   type: sum
-  #   sql: ${lifetime_orders} ;;
-  # }
 }
-
-# view: arch_clients {
-#   # Or, you could make this view a derived table, like this:
-#   derived_table: {
-#     sql: SELECT
-#         user_id as user_id
-#         , COUNT(*) as lifetime_orders
-#         , MAX(orders.created_at) as most_recent_purchase_at
-#       FROM orders
-#       GROUP BY user_id
-#       ;;
-#   }
-#
-#   # Define your dimensions and measures here, like this:
-#   dimension: user_id {
-#     description: "Unique ID for each user that has ordered"
-#     type: number
-#     sql: ${TABLE}.user_id ;;
-#   }
-#
-#   dimension: lifetime_orders {
-#     description: "The total number of orders for each user"
-#     type: number
-#     sql: ${TABLE}.lifetime_orders ;;
-#   }
-#
-#   dimension_group: most_recent_purchase {
-#     description: "The date when each user last ordered"
-#     type: time
-#     timeframes: [date, week, month, year]
-#     sql: ${TABLE}.most_recent_purchase_at ;;
-#   }
-#
-#   measure: total_lifetime_orders {
-#     description: "Use this for counting lifetime orders across many users"
-#     type: sum
-#     sql: ${lifetime_orders} ;;
-#   }
-# }
