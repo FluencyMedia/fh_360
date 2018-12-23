@@ -21,6 +21,7 @@ view: mx_master {
       group_label: "Database IDs"
       label: "Row ID [MX_Master]"
       description: "Unique row ID from master metrics table"
+      primary_key: yes
 
       required_access_grants: [access_dev_fields]
 
@@ -242,7 +243,26 @@ view: mx_master {
         type: sum
         value_format_name: decimal_0
 
-        sql: CAST(${TABLE}.measures ->> 'clicks' AS integer);;  }
+        sql: CAST(${TABLE}.measures ->> 'clicks' AS integer);;
+
+        html: {% if subtotal_over.row_type_description._value == 'SUBTOTAL' %}
+                <div style="
+                  background: #DDDDDD;
+                  width: 100%;
+                  height: 20px;
+                  padding: 3px 3px 1px;
+                  border-bottom: 1px solid black;
+                  margin:18px 0 0 0;
+                  font-size: 110%;
+                  color:black
+                ">
+                <b><span>{{ rendered_value }}</span></b>
+                </div>
+              {% else %}
+                {{ rendered_value }}
+              {% endif %};;
+
+        }
 
       measure: cost_sum {
         view_label: "5. Performance"
