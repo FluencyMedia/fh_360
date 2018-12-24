@@ -45,4 +45,11 @@ explore: arch_program {
     relationship: one_to_many
   }
 
+  join: pref_styles {
+    type: left_outer
+    relationship: many_to_one
+
+    sql_on: ${subtotal_over.row_type_description} = ${pref_styles.class} ;;
+  }
+
 }

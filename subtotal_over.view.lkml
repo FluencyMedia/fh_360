@@ -31,16 +31,15 @@ view: subtotal_over {
 
     html:{% if subtotal_over.row_type_description._value == 'SUBTOTAL' %}
             <div style="
-              background: #DDDDDD;
+              background: rgba(70, 130, 180, 0.4);
               width: 100%;
               height: 20px;
               padding:3px 3px 1px;
               border-bottom: 1px solid black;
               margin:18px 0 0 0;
               font-size: 110%;
-              color:white
             ">
-            <b><span>{{ linked_value }}</span></b>
+            <b><span style="color:blue">{{ linked_value }}</span></b>
             </div>
           {% else %}
             &nbsp;
@@ -58,14 +57,14 @@ view: subtotal_over {
 
     html: {% if value == 'SUBTOTAL' %}
             <div style="
-              background: #DDDDDD;
+              background: rgba(0, 0, 0, 0.2);
               width: 100%;
               height: 20px;
               padding: 3px 3px 1px;
               border-bottom: 1px solid black;
               margin:18px 0 0 0;
               font-size: 100%;
-              color:black
+              color:rgba(0, 0, 0, 0.8);
             ">
             <b><p style="color:white">&nbsp;</p></b>
             </div>
