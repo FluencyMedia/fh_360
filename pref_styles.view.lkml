@@ -3,7 +3,7 @@ view: pref_styles {
     sql:  SELECT
             c.id_class AS id_class,
             c.class AS class,
-            array_to_string(array_agg(c.item_style), ';'||chr(10)) AS styles
+            array_to_string(array_agg(c.item_style), ';') AS styles
               FROM (
                 SELECT
                   ca.id_class,
@@ -40,18 +40,28 @@ view: pref_styles {
   }
 
   dimension: id_class {
+    view_label: "X - Preferences"
+    label: "Style Class ID"
+
     primary_key: yes
     hidden: yes
+
     type: number
     sql: ${TABLE}.id_class ;;
   }
 
   dimension: class {
+    view_label: "X - Preferences"
+    label: "Style Class"
+
     type: string
     sql: ${TABLE}.class ;;
   }
 
   dimension: styles {
+    view_label: "X - Preferences"
+    label: "Style Attributes"
+
     type: string
     sql: ${TABLE}.styles ;;
   }

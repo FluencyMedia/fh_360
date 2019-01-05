@@ -90,7 +90,7 @@ view: mx_master {
           year
         ]
 
-        convert_tz: yes
+        convert_tz: no
         datatype: date
         sql: ${TABLE}.date ;;  }
 
@@ -243,23 +243,28 @@ view: mx_master {
         type: sum
         value_format_name: decimal_0
 
-        sql: CAST(${TABLE}.measures ->> 'clicks' AS integer);;
+        sql: COALESCE(CAST(${TABLE}.measures ->> 'clicks' AS integer),0);;
 
         html: {% if subtotal_over.row_type_description._value == 'SUBTOTAL' %}
                 <div style="
-                  background: #DDDDDD;
+                  background: rgba(70, 130, 180, 0.4);
                   width: 100%;
                   height: 20px;
                   padding: 3px 3px 1px;
                   border-bottom: 1px solid black;
                   margin:18px 0 0 0;
                   font-size: 110%;
-                  color:black
                 ">
-                <b><span>{{ rendered_value }}</span></b>
+                  <b><span>{{ rendered_value }}</span></b>
                 </div>
               {% else %}
-                {{ rendered_value }}
+                <div style="
+                  width: 100%;
+                  padding: 3px 3px 1px;
+                  font-size: 105%;
+                ">
+                  {{ rendered_value }}
+                </div>
               {% endif %};;
 
         }

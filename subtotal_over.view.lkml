@@ -34,12 +34,13 @@ view: subtotal_over {
               background: rgba(70, 130, 180, 0.4);
               width: 100%;
               height: 20px;
-              padding:3px 3px 1px;
+              padding: 3px 3px 1px;
               border-bottom: 1px solid black;
               margin:18px 0 0 0;
               font-size: 110%;
+              color:black
             ">
-            <b><span style="color:blue">{{ linked_value }}</span></b>
+            <b><span>{{ rendered_value }}</span></b>
             </div>
           {% else %}
             &nbsp;
@@ -55,22 +56,6 @@ view: subtotal_over {
     # For subtotal rows: show 'SUBTOTAL'.  For nulls, show '∅' (supports intuitive sorting).  Otherwise use raw base table field's data. Note, concatenation with '${row_type_checker}' is used to concisely force subtotal rows to evaluate to null, which is then converted to 'SUBTOTAL'
     sql: coalesce(cast(coalesce(cast(${arch_program.rel_program_detail} as varchar),'∅')||${row_type_checker} as varchar),'SUBTOTAL');;
 
-    html: {% if value == 'SUBTOTAL' %}
-            <div style="
-              background: rgba(0, 0, 0, 0.2);
-              width: 100%;
-              height: 20px;
-              padding: 3px 3px 1px;
-              border-bottom: 1px solid black;
-              margin:18px 0 0 0;
-              font-size: 100%;
-              color:rgba(0, 0, 0, 0.8);
-            ">
-            <b><p style="color:white">&nbsp;</p></b>
-            </div>
-          {% else %}
-            {{ linked_value }}
-          {% endif %};;
     }
 
   dimension: rel_program_detail_order {
@@ -82,5 +67,24 @@ view: subtotal_over {
 
     #For order by fields, use a similar calculation, but use values that correctly put nulls at min and subtotals at max of sort order positioning
     sql: coalesce(cast(coalesce(cast(${arch_program.rel_program_detail} as varchar),'ZZZZZZZZZZ')||${row_type_checker} as varchar),'          ');;
+
+    html: {% if subtotal_over.row_type_description._value == 'SUBTOTAL' %}
+            <div style="
+              background: rgba(70, 130, 180, 0.4);
+              width: 100%;
+              height: 20px;
+              padding: 3px 3px 1px;
+              border-bottom: 1px solid black;
+              margin:18px 0 0 0;
+              font-size: 110%;
+              color:black
+            ">
+            &nbsp;
+            </div>
+          {% else %}
+            {{ rendered_value }}
+          {% endif %};;
+
+
     }
 }
