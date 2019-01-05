@@ -11,6 +11,7 @@ view: arch_program {
             service_line,
             service_offering,
             service_detail,
+            medium,
             campaign_group,
             campaign_region,
             campaign_location,
