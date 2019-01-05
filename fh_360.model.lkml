@@ -23,6 +23,8 @@ access_grant: access_dev_fields {
   allowed_values: ["yes"]
 }
 
+persist_with: mp360_datagroup
+
 explore: arch_program {
   group_label: "MedPath360"
   label: "MedPath360 - Marketing Insights"

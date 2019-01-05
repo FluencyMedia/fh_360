@@ -1,5 +1,31 @@
 view: arch_program {
-  sql_table_name: analytics.arch_program ;;
+  derived_table: {
+    sql:  SELECT
+            last_updated,
+            organization_id,
+            account_id,
+            account,
+            agency,
+            program,
+            service_line_code,
+            service_line,
+            service_offering,
+            service_detail,
+            campaign_group,
+            campaign_region,
+            campaign_location,
+            campaign_id,
+            campaign,
+            campaign_tier,
+            campaign_matchtype,
+            adgroup_id,
+            adgroup
+          FROM analytics.arch_program ap  ;;
+
+    datagroup_trigger: mp360_datagroup
+    indexes: ["last_updated"]
+
+  }
 
 
   #>>>>>>>>>  METADATA  {
