@@ -8,8 +8,9 @@ view: arch_outcomes {
     view_label: "Z - Metadata"
     group_label: "Database IDs"
     label: "Outcome Tracker ID [Arch_Outcomes]"
-    type: string
 
+    primary_key: yes
+    type: string
     hidden: no
 
     sql: ${TABLE}.outcome_tracker_id ;;

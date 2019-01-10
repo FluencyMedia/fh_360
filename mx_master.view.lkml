@@ -1,5 +1,30 @@
 view: mx_master {
-  sql_table_name: analytics.mx_master ;;
+  derived_table: {
+    sql:
+      SELECT
+        mx.row_id,
+        mx.adgroup_id,
+        mx.outcome_tracker_id,
+        mx.date,
+        EXTRACT (year FROM mx.date) AS year,
+        EXTRACT (month FROM mx.date) AS month,
+        EXTRACT (day FROM mx.date) AS day,
+        (mx.dim_channel ->> 'device')::TEXT AS device,
+        (mx.dim_channel ->> 'mode')::TEXT AS mode,
+        (mx.dim_channel ->> 'final_url')::TEXT AS final_url,
+        (mx.dim_creative ->> 'creative')::TEXT AS creative,
+        (mx.dim_creative ->> 'creative_format')::TEXT AS creative_format,
+        (mx.measures ->> 'impressions')::INTEGER AS impressions,
+        (mx.measures ->> 'clicks')::INTEGER AS clicks,
+        (mx.measures ->> 'cost')::DOUBLE PRECISION AS cost,
+        (mx.measures ->> 'outcomes')::INTEGER AS outcomes,
+        (mx.measures ->> 'outcomes_bulk')::INTEGER AS outcomes_bulk
+      FROM analytics.mx_master mx
+    ;;
+
+    datagroup_trigger: mp360_datagroup
+    indexes: ["row_id"]
+  }
 
 
   ##########  METADATA    {
@@ -142,7 +167,7 @@ view: mx_master {
         label: "Creative"
 
         type: string
-        sql:  ${TABLE}.dim_creative ->> 'creative';;
+        sql:  ${TABLE}.creative;;
       }
 
 
@@ -156,7 +181,7 @@ view: mx_master {
 
         type: string
 
-        sql: ${TABLE}.dim_channel ->> 'device' ;;  }
+        sql: ${TABLE}.device ;;  }
 
       dimension: mode {
         view_label: "3. Channel"
@@ -166,7 +191,7 @@ view: mx_master {
 
         html: <font size="2">{{rendered_value}}</font> ;;
 
-        sql: ${TABLE}.dim_channel ->> 'mode' ;;  }
+        sql: ${TABLE}.mode ;;  }
 
       dimension: final_url {
         view_label: "3. Channel"
@@ -174,7 +199,7 @@ view: mx_master {
 
         type: string
 
-        sql: ${TABLE}.dim_channel ->> 'final_url' ;;  }
+        sql: ${TABLE}.final_url ;;  }
 
     ##### Channel Dimensions } #####
 
@@ -234,7 +259,7 @@ view: mx_master {
         type: sum
         value_format_name: decimal_0
 
-        sql: CAST(${TABLE}.measures ->> 'impressions' AS integer);;  }
+        sql: ${TABLE}.impressions;;  }
 
       measure: impr_pct {
         view_label: "5. Performance"
@@ -256,7 +281,7 @@ view: mx_master {
         type: sum
         value_format_name: decimal_0
 
-        sql: COALESCE(CAST(${TABLE}.measures ->> 'clicks' AS integer),0);;
+        sql: ${TABLE}.clicks;;
 
         html: {% if subtotal_over.row_type_description._value == 'SUBTOTAL' %}
                 <div style="
@@ -289,7 +314,7 @@ view: mx_master {
         type: sum
         value_format_name: usd_0
 
-        sql: CAST(${TABLE}.measures ->> 'cost' AS double precision);;  }
+        sql: ${TABLE}.cost;;  }
 
       measure: outcomes_sum {
         view_label: "6. Outcomes"
@@ -298,7 +323,7 @@ view: mx_master {
         type: sum
         value_format_name: decimal_0
 
-        sql: CAST(${TABLE}.measures ->> 'outcomes' AS integer);;  }
+        sql: ${TABLE}.outcomes;;  }
 
       measure: outcomes_bulk_sum {
         view_label: "6. Outcomes"
@@ -310,7 +335,7 @@ view: mx_master {
         type: sum
         value_format_name: decimal_0
 
-        sql: CAST(${TABLE}.measures ->> 'outcomes_bulk' AS integer);;  }
+        sql: ${TABLE}.outcomes_bulk;;  }
 
     ##### }
     ##### End Base Measures
@@ -386,7 +411,7 @@ view: mx_master {
         description: "ISOLATED: Outcome Quality = 'Referrals'"
 
         type: sum
-        sql: (${TABLE}.measures ->> 'outcomes')::integer ;;
+        sql: ${TABLE}.outcomes ;;
         value_format_name: decimal_0
 
         filters: {
@@ -400,7 +425,7 @@ view: mx_master {
         description: "ISOLATED: Outcome Quality = 'Leads'"
 
         type: sum
-        sql: (${TABLE}.measures ->> 'outcomes')::integer ;;
+        sql: ${TABLE}.outcomes ;;
         value_format_name: decimal_0
 
         filters: {
@@ -414,7 +439,7 @@ view: mx_master {
         description: "ISOLATED: Outcome Quality = 'Outcomes'"
 
         type: sum
-        sql: (${TABLE}.measures ->> 'outcomes')::integer ;;
+        sql: ${TABLE}.outcomes ;;
         value_format_name: decimal_0
 
         filters: {
