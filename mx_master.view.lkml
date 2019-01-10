@@ -133,7 +133,20 @@ view: mx_master {
 
 
 
-    ##### Time Dimension } #####
+    ##### Time Dimensions } #####
+
+    ##### Creative Dimensions  {
+
+      dimension: creative {
+        view_label: "5. Creative"
+        label: "Creative"
+
+        type: string
+        sql:  ${TABLE}.dim_creative ->> 'creative';;
+      }
+
+
+    ##### Creative Dimensions } #####
 
     ##### Channel Dimensions {
 
