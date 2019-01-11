@@ -1,40 +1,5 @@
 view: mx_master {
-  derived_table: {
-    sql:
-      SELECT
-        CONCAT('MONTH-',(ARRAY_AGG(mx.row_id))[1]) AS row_id,
-        MIN(last_updated) AS last_updated,
-        MIN(mx.date) AS date,
-        EXTRACT(year FROM date) AS year,
-        EXTRACT(month FROM date) AS month,
-        mx.adgroup_id,
-        mx.outcome_tracker_id,
-        (mx.dim_channel ->> 'device')::TEXT AS device,
-        (mx.dim_channel ->> 'mode')::TEXT AS mode,
-        (mx.dim_channel ->> 'final_url')::TEXT AS final_url,
-        (mx.dim_creative ->> 'creative')::TEXT AS creative,
-        (mx.dim_creative ->> 'creative_format')::TEXT AS creative_format,
-        SUM((mx.measures ->> 'impressions')::INTEGER) AS impressions,
-        SUM((mx.measures ->> 'clicks')::INTEGER) AS clicks,
-        SUM((mx.measures ->> 'cost')::DOUBLE PRECISION) AS cost,
-        SUM((mx.measures ->> 'outcomes')::INTEGER) AS outcomes,
-        SUM((mx.measures ->> 'outcomes_bulk')::INTEGER) AS outcomes_bulk
-      FROM analytics.mx_master mx
-      GROUP BY
-        year,
-        month,
-        mx.adgroup_id,
-        mx.outcome_tracker_id,
-        device,
-        mode,
-        final_url,
-        creative,
-        creative_format
-    ;;
-
-    datagroup_trigger: mp360_datagroup
-    indexes: ["row_id"]
-  }
+  sql_table_name: analytics.mx_master ;;
 
 
   ##########  METADATA    {

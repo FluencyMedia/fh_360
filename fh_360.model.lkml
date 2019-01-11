@@ -25,9 +25,44 @@ access_grant: access_dev_fields {
 
 persist_with: mp360_datagroup
 
+explore: mx_master_month {
+  group_label: "MedPath360"
+  label: "MP360 - Marketing Insights (Master - Monthly)"
+
+  join: arch_program {
+    relationship: one_to_many
+    type: full_outer
+    sql_on: ${mx_master_month.adgroup_id} = ${arch_program.adgroup_id} ;;
+  }
+
+  join: arch_outcomes {
+    relationship: one_to_many
+    type: full_outer
+    sql_on: ${mx_master_month.outcome_tracker_id} = ${arch_outcomes.outcome_tracker_id} ;; }
+
+  join: arch_clients {
+      relationship: one_to_many
+    type: full_outer
+    sql_on: ${arch_program.organization_id} = ${arch_clients.organization_id} ;;
+  }
+
+  join: subtotal_over {
+    type: cross
+    relationship: one_to_many
+  }
+
+  join: pref_styles {
+    type: left_outer
+    relationship: many_to_one
+
+    sql_on: ${subtotal_over.row_type_description} = ${pref_styles.class} ;;
+  }
+
+}
+
 explore: arch_program {
   group_label: "MedPath360"
-  label: "MedPath360 - Marketing Insights"
+  label: "MP360 - Marketing Insights"
 
   join: mx_master {
     relationship: one_to_many
