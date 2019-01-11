@@ -1,5 +1,5 @@
 view: mx_master {
-  sql_table_name: analytics.mx_master ;;
+  sql_table_name: analytics.mx_master_month ;;
 
 
   ##########  METADATA    {
@@ -90,7 +90,7 @@ view: mx_master {
           year
         ]
 
-        convert_tz: no
+        convert_tz: yes
         datatype: date
         sql: ${TABLE}.date ;;  }
 
