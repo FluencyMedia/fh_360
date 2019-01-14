@@ -22,10 +22,6 @@ view: arch_program {
             adgroup_id,
             adgroup
           FROM analytics.arch_program ap  ;;
-
-    datagroup_trigger: mp360_datagroup
-    indexes: ["last_updated"]
-
   }
 
 

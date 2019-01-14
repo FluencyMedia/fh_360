@@ -25,6 +25,10 @@ access_grant: access_dev_fields {
 
 persist_with: mp360_datagroup
 
+explore: list_phases {
+  group_label: "Breadcrumb Marketing"
+  label: "Marketing Phases"
+}
 
 explore: mx_master {
   view_name: mx_master
