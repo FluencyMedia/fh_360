@@ -462,7 +462,7 @@ view: mx_master {
 
       measure: ltr {
         view_label: "6. Outcomes"
-        label: "% LTR"
+        label: "% Leads"
         description: "# Leads / # Clicks"
 
         type: number

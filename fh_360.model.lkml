@@ -141,7 +141,7 @@ explore: mx_core_month {
 
 explore: mx_core_day {
   group_label: "MedPath360"
-  label: "Marketing - Monthly (Day)"
+  label: "Marketing - Daily (Core)"
 
   join: arch_program {
     relationship: one_to_many
