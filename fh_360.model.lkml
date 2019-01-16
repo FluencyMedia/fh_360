@@ -12,7 +12,7 @@ datagroup: mp360_datagroup {
                   UNION ALL
                   SELECT ac.last_updated from analytics.arch_clients ac
                 ) trg ;;
-  max_cache_age: "1 hour"
+  max_cache_age: "24 hours"
 }
 
 include: "*.view.lkml"                       # include all views in this project
