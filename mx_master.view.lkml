@@ -369,6 +369,15 @@ view: mx_master {
 
         sql: 1.0*(${cost_sum}) / nullif(${clicks_sum},0) ;;  }
 
+      measure: cpm {
+        view_label: "5. Performance"
+        label: "$ CPM"
+
+        type: number
+        value_format_name: usd
+
+        sql: 1.0*(${cost_sum}) / nullif((${impr_sum}/1000),0) ;;  }
+
       measure: cpo {
         view_label: "6. Outcomes"
         label: "$ CPO"

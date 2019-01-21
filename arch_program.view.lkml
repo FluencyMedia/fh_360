@@ -232,6 +232,14 @@ view: arch_program {
         sql: ${TABLE}.campaign_region ;;
       }
 
+      dimension: campaign_tier {
+        view_label: "3. Channel"
+        label: "Campaign Tier"
+
+        type: string
+        sql: ${TABLE}.campaign_tier ;;
+      }
+
       dimension: campaign_location {
         view_label: "3. Channel"
         group_label: "Campaign Geography"
