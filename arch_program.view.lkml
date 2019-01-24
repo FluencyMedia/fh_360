@@ -292,14 +292,34 @@ view: arch_program {
         sql: ${TABLE}.service_line_code ;;
       }
 
-      dimension: agency {
-        view_label: "1. Client/Account"
-        label: "Agency"
-        description: "Agency Managing Any Given Campaign"
+    dimension: service_offering {
+      view_label: "2. Services"
+      group_label: "Service Architecture"
+      label: "Service Offering"
+      description: "Service Line Offering"
 
-        type: string
-        sql: ${TABLE}.agency ;;
-      }
+      type: string
+      sql: ${TABLE}.service_offering ;;
+    }
+
+    dimension: service_detail {
+      view_label: "2. Services"
+      group_label: "Service Architecture"
+      label: "Service Detail"
+      description: "Service Detail"
+
+      type: string
+      sql: ${TABLE}.service_detail ;;
+    }
+
+    dimension: agency {
+            view_label: "1. Client/Account"
+            label: "Agency"
+            description: "Agency Managing Any Given Campaign"
+
+            type: string
+            sql: ${TABLE}.agency ;;
+          }
 
   ##########  DIMENSIONS  }  ##########
 
