@@ -90,7 +90,7 @@ view: mx_master {
           year
         ]
 
-        convert_tz: yes
+        convert_tz: no
         datatype: date
         sql: ${TABLE}.date ;;  }
 
@@ -442,8 +442,8 @@ view: mx_master {
 
       measure: leads_total {
         view_label: "6. Outcomes"
-        label: "# Leads"
-        description: "AGGREGATED: # Outcomes (Referrals) + # Outcomes (Leads)"
+        label: "# Referrals"
+        description: "# Outcomes (Referrals)"
 
         drill_fields: [
           drill_outcomes*,
@@ -451,14 +451,14 @@ view: mx_master {
         ]
 
         type: number
-        sql: ${o_referrals_num} + ${o_leads_num} ;;
+        sql: ${o_referrals_num} ;;
         value_format_name: decimal_0
       }
 
       measure: cpl {
         view_label: "6. Outcomes"
-        label: "$ CPL"
-        description: "$ Cost / # Leads"
+        label: "$ CPR"
+        description: "$ Cost / # Referrals"
 
         drill_fields: [
           drill_outcomes*
@@ -471,8 +471,8 @@ view: mx_master {
 
       measure: ltr {
         view_label: "6. Outcomes"
-        label: "% Leads"
-        description: "# Leads / # Clicks"
+        label: "% Referrals"
+        description: "# Referrals / # Clicks"
 
         type: number
         value_format_name: percent_2

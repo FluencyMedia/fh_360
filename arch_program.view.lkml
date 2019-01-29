@@ -278,6 +278,11 @@ view: arch_program {
           drill_program*
           ]
 
+        link: {
+          label: "Dashboard - 2018 PPC Performance Summary"
+          url:  "/dashboards/32?&f[arch_program.program]={{ _filters['arch_program.program'] | url_encode }}&f[arch_program.service_line]={{ _filters['arch_program.service_line'] | url_encode }}"
+        }
+
         type: string
         sql: ${TABLE}.program ;;
       }
