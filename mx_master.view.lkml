@@ -429,7 +429,7 @@ view: mx_master {
       measure: o_outcomes_num {
         view_label: "Z - Metadata"
         group_label: "Isolated Measures"
-        label: "# Outcomes (Outcomes)"
+        label: "= Outcomes"
         description: "ISOLATED: Outcome Quality = 'Outcomes'"
 
         type: sum
@@ -442,8 +442,8 @@ view: mx_master {
 
       measure: leads_total {
         view_label: "6. Outcomes"
-        label: "# Referrals"
-        description: "# Outcomes (Referrals)"
+        label: ">= Leads"
+        description: "'# Leads' + '# Referrals"
 
         drill_fields: [
           drill_outcomes*,
@@ -451,14 +451,14 @@ view: mx_master {
         ]
 
         type: number
-        sql: ${o_referrals_num} ;;
+        sql: ${o_leads_num} + ${o_referrals_num} ;;
         value_format_name: decimal_0
       }
 
       measure: cpl {
         view_label: "6. Outcomes"
-        label: "$ CPR"
-        description: "$ Cost / # Referrals"
+        label: "$ CPL"
+        description: "$ Cost / # Leads"
 
         drill_fields: [
           drill_outcomes*
@@ -471,13 +471,54 @@ view: mx_master {
 
       measure: ltr {
         view_label: "6. Outcomes"
+        label: "% Leads"
+        description: "# Leads / # Clicks"
+
+        type: number
+        value_format_name: percent_2
+
+        sql: 1.0*(${leads_total}) / nullif(${clicks_sum},0) ;;  }
+
+      measure: referrals_total {
+        view_label: "6. Outcomes"
+        label: ">= Referrals"
+        description: "= '# Referrals'"
+
+        drill_fields: [
+          drill_outcomes*,
+          drill_mx_outcomes*
+        ]
+
+        type: number
+        sql: ${o_referrals_num} ;;
+        value_format_name: decimal_0
+      }
+
+      measure: cpr {
+        view_label: "6. Outcomes"
+        label: "$ CPR"
+        description: "$ Cost / # Referrals"
+
+        drill_fields: [
+          drill_outcomes*
+        ]
+
+        type: number
+        value_format_name: usd
+
+        sql: 1.0*(${cost_sum}) / nullif(${referrals_total},0) ;;  }
+
+      measure: rtr {
+        view_label: "6. Outcomes"
         label: "% Referrals"
         description: "# Referrals / # Clicks"
 
         type: number
         value_format_name: percent_2
 
-        sql: 1.0*(${leads_total}) / nullif(${clicks_sum},0) ;;  }
+        sql: 1.0*(${referrals_total}) / nullif(${clicks_sum},0) ;;  }
+
+
 
       measure: avg_conv_score {
         view_label: "6. Outcomes"
