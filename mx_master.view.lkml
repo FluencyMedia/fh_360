@@ -401,7 +401,7 @@ view: mx_master {
       measure: o_referrals_num {
         view_label: "Z - Metadata"
         group_label: "Isolated Measures"
-        label: "# Outcomes (Referrals)"
+        label: "= 'Referrals'"
         description: "ISOLATED: Outcome Quality = 'Referrals'"
 
         type: sum
@@ -415,7 +415,7 @@ view: mx_master {
       measure: o_leads_num {
         view_label: "Z - Metadata"
         group_label: "Isolated Measures"
-        label: "# Outcomes (Leads)"
+        label: "= 'Leads'"
         description: "ISOLATED: Outcome Quality = 'Leads'"
 
         type: sum
@@ -429,7 +429,7 @@ view: mx_master {
       measure: o_outcomes_num {
         view_label: "Z - Metadata"
         group_label: "Isolated Measures"
-        label: "= Outcomes"
+        label: "= 'Outcomes'"
         description: "ISOLATED: Outcome Quality = 'Outcomes'"
 
         type: sum
