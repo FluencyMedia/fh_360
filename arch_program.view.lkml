@@ -275,13 +275,24 @@ view: arch_program {
         description: "Service Line Program"
 
         drill_fields: [
-          drill_program*
+          # drill_program*
           ]
 
         link: {
-          label: "Dashboard - 2018 PPC Performance Summary"
-          url:  "/dashboards/32?&f[arch_program.program]={{ _filters['arch_program.program'] | url_encode }}&f[arch_program.service_line]={{ _filters['arch_program.service_line'] | url_encode }}"
+          # label: "Performance - Visibility"
+          label:  "/dashboards/38?Program={{ _filters['arch_program.program'] | url_encode }}"
+          url:  "/dashboards/38?Program={{ _filters['arch_program.program'] | url_encode }}"
         }
+
+        # link: {
+        #   label: "Performance - Engagement"
+        #   url:  "/dashboards/39?&f[arch_program.program]={{ value }}&f[arch_program.service_line]={{ _filters['arch_program.service_line'] | url_encode }}&f[arch_program.medium]={{ _filters['arch_program.medium'] | url_encode }}&f[arch_program.client]={{ _filters['arch_program.client'] | url_encode }}&f[arch_program.organization]={{ _filters['arch_program.organization'] | url_encode }}"
+        # }
+
+        # link: {
+        #   label: "Performance - Acquisition"
+        #   url:  "/dashboards/40?&f[arch_program.program]={{ value }}&f[arch_program.service_line]={{ _filters['arch_program.service_line'] | url_encode }}&f[arch_program.medium]={{ _filters['arch_program.medium'] | url_encode }}&f[arch_program.client]={{ _filters['arch_program.client'] | url_encode }}&f[arch_program.organization]={{ _filters['arch_program.organization'] | url_encode }}"
+        # }
 
         type: string
         sql: ${TABLE}.program ;;
