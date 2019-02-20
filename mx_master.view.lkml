@@ -10,7 +10,8 @@ view: mx_master {
       label: "Ad Group ID [MX_Master]"
       description: "Foreign Key from master metrics table"
 
-      required_access_grants: [access_dev_fields]
+      can_filter: no
+      hidden: no
 
       type: string
 
@@ -23,7 +24,8 @@ view: mx_master {
       description: "Unique row ID from master metrics table"
       primary_key: yes
 
-      required_access_grants: [access_dev_fields]
+      can_filter: no
+      hidden: no
 
       type: string
 
@@ -35,7 +37,8 @@ view: mx_master {
       label: "Outcome Tracker ID [MX_Master]"
       description: "Outcome Tracker ID from master metrics table"
 
-      required_access_grants: [access_dev_fields]
+      can_filter: no
+      hidden: no
 
       type: string
 
@@ -125,13 +128,26 @@ view: mx_master {
       group_label: "Category Counts"
       label: "# Days"
 
+      can_filter: no
+      hidden: no
+
       type: count_distinct
       value_format_name: decimal_0
 
       sql: ${date_date} ;;
     }
 
+    dimension: year_str {
+      view_label: "4. Timeframes"
+      label: "Year [LABEL]"
+      description: "'Year' as a string dimension for charts"
 
+      can_filter: no
+
+      type: string
+
+      sql: ${date_year}::text ;;
+    }
 
     ##### Time Dimensions } #####
 
@@ -175,6 +191,7 @@ view: mx_master {
         type: string
 
         sql: ${TABLE}.final_url ;;  }
+
 
     ##### Channel Dimensions } #####
 
@@ -481,7 +498,7 @@ view: mx_master {
 
       measure: referrals_total {
         view_label: "6. Outcomes"
-        label: ">= Referrals"
+        label: "# Referrals"
         description: "= '# Referrals'"
 
         drill_fields: [

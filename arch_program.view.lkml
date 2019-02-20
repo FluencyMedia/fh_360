@@ -127,8 +127,6 @@ view: arch_program {
         sql: ${arch_clients.client} ;;
       }
 
-
-
       dimension: rel_program_main {
         view_label: "2. Services"
         group_label: "Relative Dimensions"
@@ -156,6 +154,24 @@ view: arch_program {
                 ${service_line}
               {% else %}
                 ${program}
+              {% endif %} ;;
+      }
+
+      dimension: rel_service_offering {
+        view_label: "2. Services"
+        group_label: "Relative Dimensions"
+        label: "{% if service_line._is_filtered %}
+        [Offering]
+        {% else %}
+        [Service]
+        {% endif %}"
+
+        type: string
+
+        sql:  {% if service_line._is_filtered %}
+                ${service_offering}
+              {% else %}
+                ${service_line}
               {% endif %} ;;
       }
 
@@ -232,18 +248,63 @@ view: arch_program {
         sql: ${TABLE}.campaign_region ;;
       }
 
-      dimension: campaign_tier {
-        view_label: "3. Channel"
-        label: "Campaign Tier"
+      dimension: campaign_tier_base {
+        view_label: "Z - Metadata"
+        group_label: "Metrics - Base Values"
+        label: "Campaign Tier*"
 
         type: string
         sql: ${TABLE}.campaign_tier ;;
       }
 
+      dimension: campaign_tier {
+        view_label: "3. Channel"
+        label: "Campaign Tier"
+
+        type: string
+
+        case: {
+          when: {
+            sql: ${campaign_tier_base} = 'S&C' ;;
+            label: "S&C"
+          }
+          when: {
+            sql: ${campaign_tier_base} = 'T&P' ;;
+            label: "T&P"
+          }
+          when: {
+            sql: ${campaign_tier_base} = 'P&F' ;;
+            label: "P&F"
+          }
+          when: {
+            sql: ${campaign_tier_base} = 'Brand' ;;
+            label: "Brand"
+          }
+          when: {
+            sql: ${campaign_tier_base} = 'Competitor' ;;
+            label: "Competitor"
+          }
+          when: {
+            sql: ${campaign_tier_base} IN ('General', 'Varied') ;;
+            label: "General"
+          }
+          when: {
+            sql: ${campaign_tier_base} IS null ;;
+            label: "NA"
+          }
+          else: "Other"
+        }
+
+      }
+
       dimension: campaign_location {
         view_label: "3. Channel"
         group_label: "Campaign Geography"
+        label: "Campaign Location"
 
+        type: string
+
+        sql: ${TABLE}.campaign_location ;;
       }
 
       dimension: adgroup {
@@ -278,11 +339,11 @@ view: arch_program {
           # drill_program*
           ]
 
-        link: {
-          # label: "Performance - Visibility"
-          label:  "/dashboards/38?Program={{ _filters['arch_program.program'] | url_encode }}"
-          url:  "/dashboards/38?Program={{ _filters['arch_program.program'] | url_encode }}"
-        }
+        # link: {
+        #   label: "Performance - Visibility"
+        #   label:  "/dashboards/38?Program={{ _filters['arch_program.program'] | url_encode }}"
+        #   url:  "/dashboards/38?Program={{ _filters['arch_program.program'] | url_encode }}"
+        # }
 
         # link: {
         #   label: "Performance - Engagement"

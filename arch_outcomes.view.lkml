@@ -60,7 +60,18 @@ view: arch_outcomes {
     ]
 
     type: string
-    sql: ${TABLE}.outcome_quality ;;
+    case: {
+      when: {
+        sql: ${TABLE}.outcome_quality = 'Referrals' ;;
+        label: "Referrals"
+      }
+      when: {
+        sql: ${TABLE}.outcome_quality = 'Leads' ;;
+        label: "Leads"
+      }
+      else: "Outcomes"
+    }
+
   }
 
   dimension: outcome_score {
@@ -69,6 +80,33 @@ view: arch_outcomes {
 
     type: number
     sql: ${TABLE}.outcome_score ;;
+  }
+
+  dimension: outcome_type_category {
+    view_label: "6. Outcomes"
+    label: "Outcome Type - Category"
+
+    type: string
+
+    case: {
+      when: {
+        sql: ${outcome_type} LIKE 'LP%' ;;
+        label: "LP Visits"
+      }
+      when: {
+        sql: ${outcome_type} LIKE 'Ad%' ;;
+        label: "Direct Calls"
+      }
+      when: {
+        sql: ${outcome_type} LIKE '%FAD%' ;;
+        label: "FAD Visits"
+      }
+      when: {
+        sql: ${outcome_type} LIKE '%MyChart%' ;;
+        label: "MyChart Visits"
+      }
+      else: "Uncategorized Type"
+    }
   }
 
   dimension: outcome_type {
