@@ -151,8 +151,8 @@
     col: 0
     width: 24
     height: 7
-  - name: Detailed Referrals / CPR - By Program [NAME]
-    title: Detailed Referrals / CPR - By Program [TITLE]
+  - name: Detailed Referrals / CPR - By Program
+    title: Detailed Referrals / CPR - By Program
     model: fh_360
     explore: mx_master_month
     type: table
