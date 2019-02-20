@@ -18,11 +18,6 @@ datagroup: mp360_datagroup {
 include: "*.view.lkml"                       # include all views in this project
 include: "*.dashboard.lookml"   # include a LookML dashboard called my_dashboard
 
-access_grant: access_dev_fields {
-  user_attribute: access_dev_fields
-  allowed_values: ["yes"]
-}
-
 persist_with: mp360_datagroup
 
 explore: list_phases {
