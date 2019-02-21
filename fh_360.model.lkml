@@ -1,6 +1,6 @@
 connection: "fh_analytics"
 
-datagroup: mp360_datagroup {
+datagroup: dg_paid {
   sql_trigger:  SELECT
                   MAX(trg.last_updated)
                 FROM (
@@ -18,7 +18,7 @@ datagroup: mp360_datagroup {
 include: "*.view.lkml"                       # include all views in this project
 include: "*.dashboard.lookml"   # include a LookML dashboard called my_dashboard
 
-persist_with: mp360_datagroup
+persist_with: dg_paid
 
 explore: list_phases {
   group_label: "Breadcrumb Marketing"

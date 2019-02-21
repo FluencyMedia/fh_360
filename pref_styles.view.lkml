@@ -35,7 +35,7 @@ view: pref_styles {
                 ) ca
               ) c
               GROUP BY c.id_class, c.class ;;
-        datagroup_trigger: mp360_datagroup
+        datagroup_trigger: dg_paid
         indexes: ["id_class"]
   }
 

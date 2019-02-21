@@ -1,5 +1,5 @@
 - dashboard: ppc__overall_dashboard
-  title: PPC - Overall Dashboard
+  title: PPC - Overall Dashboard [LOOKML]
   layout: newspaper
   elements:
   - name: Monthly Referrals / CPR - By Program
