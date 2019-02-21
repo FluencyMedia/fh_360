@@ -23,22 +23,22 @@ persist_with: dg_paid
 
 explore: mx_core_month_bh {
   group_label: "Beaumont Health"
-  label: "Marketing - Monthly (Core)"
+  label: "BH Marketing - Monthly (Core)"
 
   join: arch_program {
     relationship: one_to_many
-    type: full_outer
+    type: left_outer
     sql_on: ${mx_core_month_bh.adgroup_id} = ${arch_program.adgroup_id} ;;
   }
 
   join: arch_outcomes {
     relationship: one_to_many
-    type: full_outer
+    type: left_outer
     sql_on: ${mx_core_month_bh.outcome_tracker_id} = ${arch_outcomes.outcome_tracker_id} ;; }
 
   join: arch_clients {
     relationship: one_to_many
-    type: full_outer
+    type: inner
     sql_on: ${arch_program.organization_id} = ${arch_clients.organization_id} ;;
   }
 
