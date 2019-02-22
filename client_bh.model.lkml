@@ -1,3 +1,5 @@
+label: "BH Dataset"
+
 connection: "fh_analytics"
 
 datagroup: dg_paid {
@@ -36,10 +38,10 @@ explore: mx_core_month_bh {
     type: left_outer
     sql_on: ${mx_core_month_bh.outcome_tracker_id} = ${arch_outcomes.outcome_tracker_id} ;; }
 
-  join: arch_clients {
+  join: arch_clients_hidden {
     relationship: one_to_many
     type: inner
-    sql_on: ${arch_program.organization_id} = ${arch_clients.organization_id} ;;
+    sql_on: ${arch_program.organization_id} = ${arch_clients_hidden.organization_id} ;;
   }
 
   join: subtotal_over {

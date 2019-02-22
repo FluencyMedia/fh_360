@@ -38,8 +38,5 @@ view: mx_core_month_bh {
     hidden: yes
   }
 
-  dimension: client {
-    hidden: yes
-  }
 
 }
