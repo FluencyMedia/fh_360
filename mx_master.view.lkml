@@ -192,8 +192,83 @@ view: mx_master {
 
         sql: ${TABLE}.final_url ;;  }
 
+      dimension: subtype_codes_raw {
+        view_label: "7. Subtype Codes"
+        label: "Subtype List [RAW]"
+        description: "Exact 'subtypelist=' parameter string from incoming URL"
 
-    ##### Channel Dimensions } #####
+        type: string
+
+        # Quick crappy hack to do this as a LookML dimension
+        # Needs to be processed and cached in source data
+        sql: split_part(split_part(split_part(${final_url},'?',2),'subtypelist=',2),'&',1) ;;
+        }
+
+      dimension: subtype_codes_str {
+        view_label: "7. Subtype Codes"
+        label: "Subtype List"
+        description: "Subtype List - Cleansed"
+
+        type: string
+
+        # Quick crappy hack to do this as a LookML dimension
+        # Needs to be processed and cached in source data
+        sql: replace(replace(replace(${subtype_codes_raw},'%20','X'),'HeartXScreeningXPPC','HeartXXScreeningXPPC'),'HVTScrn','HeartXXScreeningXEmail') ;;
+        }
+
+      dimension: subtype_codes {
+        view_label: "7. Subtype Codes"
+        label: "Subtype Codes"
+        description: "Subtypes as array of individual items"
+
+        type: string
+
+        # Quick crappy hack to do this as a LookML dimension
+        # Needs to be processed and cached in source data
+        sql: string_to_array(${subtype_codes_str},'X') ;;
+      }
+
+    dimension: sc_service {
+      view_label: "7. Subtype Codes"
+      label: "Subtype - Service"
+      description: "[SERVICE]XofferingXtopicXmedium"
+
+      type: string
+
+      sql: ${subtype_codes}[1] ;;
+      }
+
+  dimension: sc_offering {
+    view_label: "7. Subtype Codes"
+    label: "Subtype - Offering"
+    description: "serviceX[OFFERING]XtopicXmedium"
+
+    type: string
+
+    sql: ${subtype_codes}[2] ;;
+  }
+
+  dimension: sc_topic {
+    view_label: "7. Subtype Codes"
+    label: "Subtype - Topic"
+    description: "serviceXofferingX[TOPIC]Xmedium"
+
+    type: string
+
+    sql: ${subtype_codes}[3] ;;
+  }
+
+  dimension: sc_medium {
+    view_label: "7. Subtype Codes"
+    label: "Subtype - Medium"
+    description: "serviceXofferingXtopicX[MEDIUM]"
+
+    type: string
+
+    sql: ${subtype_codes}[4] ;;
+  }
+
+  ##### Channel Dimensions } #####
 
     ##### Dynamic Dimensions  {
 

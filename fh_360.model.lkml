@@ -1,5 +1,7 @@
 connection: "fh_analytics"
 
+label: "Marketing Data - ALL CLIENTS"
+
 datagroup: dg_paid {
   sql_trigger:  SELECT
                   MAX(trg.last_updated)
@@ -27,10 +29,10 @@ explore: list_phases {
 
 explore: mx_master {
   view_name: mx_master
-  view_label: "Marketing - Daily (Master)"
+  view_label: "ALL CLIENTS - Daily (Master)"
 
-  group_label: "MedPath360"
-  label: "Marketing - Daily (Master)"
+  group_label: "All Clients"
+  label: "ALL CLIENTS - Daily (Master)"
 
   join: arch_program {
     relationship: one_to_many
@@ -65,8 +67,8 @@ explore: mx_master {
 
 
 explore: mx_master_month {
-  group_label: "MedPath360"
-  label: "Marketing - Monthly (Master)"
+  group_label: "All Clients"
+  label: "ALL CLIENTS - Monthly (Master)"
 
   join: arch_program {
     relationship: one_to_many
@@ -100,8 +102,8 @@ explore: mx_master_month {
 }
 
 explore: mx_core_month {
-  group_label: "MedPath360"
-  label: "Marketing - Monthly (Core)"
+  group_label: "All Clients"
+  label: "ALL CLIENTS - Monthly (Core)"
 
   join: arch_program {
     relationship: one_to_many
@@ -135,8 +137,8 @@ explore: mx_core_month {
 }
 
 explore: mx_core_day {
-  group_label: "MedPath360"
-  label: "Marketing - Daily (Core)"
+  group_label: "All Clients"
+  label: "ALL CLIENTS - Daily (Core)"
 
   join: arch_program {
     relationship: one_to_many
@@ -170,8 +172,8 @@ explore: mx_core_day {
 }
 
 explore: arch_program {
-  group_label: "MedPath360"
-  label: "MP360 - Marketing Insights"
+  group_label: "All Clients"
+  label: "ALL CLIENTS - Marketing Insights"
 
   join: mx_master {
     relationship: one_to_many

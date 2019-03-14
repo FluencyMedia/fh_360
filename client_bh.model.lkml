@@ -40,7 +40,7 @@ explore: mx_core_month_bh {
 
   join: arch_clients_hidden {
     relationship: one_to_many
-    type: inner
+    type: left_outer
     sql_on: ${arch_program.organization_id} = ${arch_clients_hidden.organization_id} ;;
   }
 
