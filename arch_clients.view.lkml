@@ -80,7 +80,8 @@ view: arch_clients {
     ]
 
     type: string
-    sql: ${TABLE}.organization ;;
+
+    sql: CONCAT(replace(${TABLE}.organization, 'SCL - ',''),' [',${org_short},']') ;;
   }
 
   dimension: org_short {

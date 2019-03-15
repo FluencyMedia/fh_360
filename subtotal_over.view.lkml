@@ -1,5 +1,6 @@
 view: subtotal_over {
-  sql_table_name: (select '' as row_type union select null as row_type) ;; #This sql table name is used to create a duplicate copy of the data. When rowType is null, fields from this view will resolve to 'SUBTOTAL'
+  #This sql table name is used to create a duplicate copy of the data. When rowType is null, fields from this view will resolve to 'SUBTOTAL'
+  sql_table_name: (select '' as row_type union select null as row_type) ;;
 
   #used in sql parameters below to re-assign values to 'SUBTOTAL' on subtotal rows
   dimension: row_type_checker {
