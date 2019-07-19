@@ -26,6 +26,7 @@ persist_with: dg_paid
 explore: mx_core_month_bh {
   group_label: "Beaumont Health"
   label: "BH Marketing - Monthly (Core)"
+  hidden: yes
 
   join: arch_program {
     relationship: one_to_many

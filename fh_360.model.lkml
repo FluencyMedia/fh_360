@@ -23,6 +23,7 @@ include: "*.dashboard.lookml"   # include a LookML dashboard called my_dashboard
 persist_with: dg_paid
 
 explore: list_phases {
+  hidden: yes
   group_label: "Breadcrumb Marketing"
   label: "Marketing Phases"
 }
@@ -30,6 +31,7 @@ explore: list_phases {
 explore: mx_master {
   view_name: mx_master
   view_label: "ALL CLIENTS - Daily (Master)"
+  hidden: yes
 
   group_label: "All Clients"
   label: "ALL CLIENTS - Daily (Master)"
@@ -69,6 +71,7 @@ explore: mx_master {
 explore: mx_master_month {
   group_label: "All Clients"
   label: "ALL CLIENTS - Monthly (Master)"
+  hidden: yes
 
   join: arch_program {
     relationship: one_to_many
@@ -104,6 +107,7 @@ explore: mx_master_month {
 explore: mx_core_month {
   group_label: "All Clients"
   label: "ALL CLIENTS - Monthly (Core)"
+  hidden: yes
 
   join: arch_program {
     relationship: one_to_many
@@ -139,6 +143,7 @@ explore: mx_core_month {
 explore: mx_core_day {
   group_label: "All Clients"
   label: "ALL CLIENTS - Daily (Core)"
+  hidden: yes
 
   join: arch_program {
     relationship: one_to_many
@@ -174,6 +179,7 @@ explore: mx_core_day {
 explore: arch_program {
   group_label: "All Clients"
   label: "ALL CLIENTS - Marketing Insights"
+  hidden: yes
 
   join: mx_master {
     relationship: one_to_many
